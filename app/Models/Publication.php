@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Publication extends Model
 {
@@ -19,7 +20,8 @@ class Publication extends Model
         'fund_source',
     ];
 
-    protected $casts = [
-        'authors' => 'array',
-    ];
+    public function users(): BelongsToMany
+    {
+       return $this->belongsToMany(User::class);
+    }
 }

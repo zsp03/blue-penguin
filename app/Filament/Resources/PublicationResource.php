@@ -30,9 +30,7 @@ class PublicationResource extends Resource
                 Forms\Components\Select::make('authors')
                     ->required()
                     ->multiple()
-                    ->searchable()
-                    ->getSearchResultsUsing(fn (string $search): array => User::where('name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
-                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
+                    ->relationship('users', 'name'),
                 Forms\Components\TextInput::make('link')
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('year')
@@ -61,7 +59,7 @@ class PublicationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('authors')
+                Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
                     ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('link')
