@@ -20,8 +20,12 @@ class Publication extends Model
         'fund_source',
     ];
 
-    public function users(): BelongsToMany
+    protected $casts = [
+        'authors' => 'array',
+    ];
+
+    public function lecturers(): BelongsToMany
     {
-       return $this->belongsToMany(User::class);
+       return $this->belongsToMany(Lecturer::class);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FinalProjectResource\Pages;
 use App\Filament\Resources\FinalProjectResource\RelationManagers;
 use App\Models\FinalProject;
+use App\Models\Lecturer;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -32,12 +34,16 @@ class FinalProjectResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('supervisor')
+                Forms\Components\Select::make('supervisor')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('evaluator')
+                    ->multiple()
+                    ->getSearchResultsUsing(fn (string $search): array => User::whereHas('lecturer', function ($q) use ($search) { $q->where('name', 'like', "%{$search}%"); })->limit(50)->pluck('name', 'id')->toArray())
+                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
+                Forms\Components\Select::make('evaluator')
                     ->required()
-                    ->maxLength(255),
+                    ->multiple()
+                    ->getSearchResultsUsing(fn (string $search): array => User::whereHas('lecturer', function ($q) use ($search) { $q->where('name', 'like', "%{$search}%"); })->limit(50)->pluck('name', 'id')->toArray())
+                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
             ]);
     }
 
@@ -51,10 +57,10 @@ class FinalProjectResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('supervisor')
-                    ->searchable(),
+                Tables\Columns\ViewColumn::make('supervisor')
+                    ->view('filament.tables.columns.authors-list'),
                 Tables\Columns\TextColumn::make('evaluator')
-                    ->searchable(),
+                    ->view('filament.tables.columns.authors-list'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -16,4 +16,9 @@ class FinalProject extends Model
         'supervisor',
         'evaluator'
     ];
+
+    protected $casts = [
+      'supervisor' => 'array',
+      'evaluator' => 'array'
+    ];
 }

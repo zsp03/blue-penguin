@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PublicationResource\Pages;
 use App\Filament\Resources\PublicationResource\RelationManagers;
+use App\Filament\Resources\PublicationResource\Widgets\PublicationStats;
 use App\Models\Publication;
 use App\Models\User;
 use Filament\Forms;
@@ -27,10 +28,11 @@ class PublicationResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('authors')
-                    ->required()
-                    ->multiple()
-                    ->relationship('users', 'name'),
+//                    Forms\Components\Select::make('authors')
+//                    ->required()
+//                    ->multiple()
+//                    ->getSearchResultsUsing(fn (string $search): array => User::where('name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
+//                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
                 Forms\Components\TextInput::make('link')
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('year')
@@ -47,6 +49,7 @@ class PublicationResource extends Resource
                         'pengabdian' => 'Pengabdian',
                     ]),
                 Forms\Components\TextInput::make('citation')
+                    ->numeric()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('fund_source')
                     ->maxLength(255),
@@ -59,8 +62,8 @@ class PublicationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->searchable()
+                Tables\Columns\TextColumn::make('lecturers.user.name')
+                    ->label('Authors')
                     ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('link')
                     ->searchable(),
@@ -109,7 +112,14 @@ class PublicationResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\LecturerRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            PublicationStats::class
         ];
     }
 
