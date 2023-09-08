@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\PublicationResource\RelationManagers;
 
+use App\Models\Lecturer;
+use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -15,28 +18,18 @@ class LecturerRelationManager extends RelationManager
     protected static string $relationship = 'lecturers';
     protected static ?string $title = 'Authors';
 
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->maxLength(255),
-            ]);
-    }
-
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('user_id')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')->label('Authors'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make(),
+                Tables\Actions\AttachAction::make()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

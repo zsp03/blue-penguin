@@ -12,6 +12,8 @@ class Lecturer extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'name',
+        'image',
         'nip',
     ];
 
@@ -22,5 +24,9 @@ class Lecturer extends Model
     public function publications(): BelongsToMany
     {
         return $this->belongsToMany(Publication::class);
+    }
+    public function finalProjects(): BelongsToMany
+    {
+        return $this->belongsToMany(FinalProject::class)->withPivot('role');
     }
 }

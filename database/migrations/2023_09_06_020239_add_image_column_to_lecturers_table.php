@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lecturers', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('nip');
-
-            $table->timestamps();
+        Schema::table('lecturers', function (Blueprint $table) {
+            $table->string('image')->nullable();
+            $table->string('image_url')->nullable();
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lecturer');
+        Schema::table('lecturers', function (Blueprint $table) {
+            //
+        });
     }
 };

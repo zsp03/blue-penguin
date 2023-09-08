@@ -2,22 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LecturerResource\Pages;
-use App\Filament\Resources\LecturerResource\RelationManagers;
-use App\Models\Lecturer;
-use App\Models\User;
+use App\Filament\Resources\StudentResource\Pages;
+use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class LecturerResource extends Resource
+class StudentResource extends Resource
 {
-    protected static ?string $model = Lecturer::class;
+    protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,15 +23,14 @@ class LecturerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->live()
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('name', User::find((int)$state)->name))
-                    ->required(),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\FileUpload::make('image')
-                    ->directory('lecturer-images'),
-                Forms\Components\TextInput::make('nip')
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nim')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->email()
                     ->required()
                     ->maxLength(255),
             ]);
@@ -44,12 +41,11 @@ class LecturerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('nip')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image')
-                    ->circular(),
+                Tables\Columns\TextColumn::make('nim')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -74,20 +70,20 @@ class LecturerResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-
+    
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLecturers::route('/'),
-            'create' => Pages\CreateLecturer::route('/create'),
-            'edit' => Pages\EditLecturer::route('/{record}/edit'),
+            'index' => Pages\ListStudents::route('/'),
+            'create' => Pages\CreateStudent::route('/create'),
+            'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
-    }
+    }    
 }

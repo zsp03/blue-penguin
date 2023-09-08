@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FinalProjectResource\Pages;
 use App\Filament\Resources\FinalProjectResource\RelationManagers;
+use App\Filament\Tables\Columns\SupervisorList;
 use App\Models\FinalProject;
 use App\Models\Lecturer;
+use App\Models\Student;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -25,25 +27,14 @@ class FinalProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('author')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('submitted_at')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('student_id')
+                    ->native(false)
+                    ->options(Student::all()->pluck('name', 'id')),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('supervisor')
+                Forms\Components\DatePicker::make('submitted_at')
                     ->required()
-                    ->multiple()
-                    ->getSearchResultsUsing(fn (string $search): array => User::whereHas('lecturer', function ($q) use ($search) { $q->where('name', 'like', "%{$search}%"); })->limit(50)->pluck('name', 'id')->toArray())
-                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
-                Forms\Components\Select::make('evaluator')
-                    ->required()
-                    ->multiple()
-                    ->getSearchResultsUsing(fn (string $search): array => User::whereHas('lecturer', function ($q) use ($search) { $q->where('name', 'like', "%{$search}%"); })->limit(50)->pluck('name', 'id')->toArray())
-                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
             ]);
     }
 
@@ -51,21 +42,53 @@ class FinalProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('author')
+                Tables\Columns\TextColumn::make('student_id.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('submitted_at')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\ViewColumn::make('supervisor')
-                    ->view('filament.tables.columns.authors-list'),
-                Tables\Columns\TextColumn::make('evaluator')
-                    ->view('filament.tables.columns.authors-list'),
+                Tables\Columns\ImageColumn::make('supervisor')
+                    ->state(function (FinalProject $record) {
+                        $list = [];
+                        foreach ($record->lecturers as $lecturer)
+                        {
+                            if ($lecturer->pivot->role == 'supervisor') {
+                                $list[] = $lecturer->image;
+                            }
+                        }
+                        return $list;
+                    })
+                    ->circular()
+                    ->stacked(),
+                Tables\Columns\ImageColumn::make('evaluator')
+                    ->state(function (FinalProject $record) {
+                        $list = [];
+                        foreach ($record->lecturers as $lecturer)
+                        {
+                            if ($lecturer->pivot->role == 'evaluator') {
+                                $list[] = $lecturer->image;
+                            }
+                        }
+                        return $list;
+                    })
+                    ->circular()
+                    ->stacked(),
+                SupervisorList::make('test')
+                    ->state(function (FinalProject $record) {
+                        $list = [];
+                        foreach ($record->lecturers as $lecturer)
+                        {
+                            if ($lecturer->pivot->role == 'supervisor') {
+                                $list[] = $lecturer->image;
+                            }
+                        }
+                        return $list;
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -90,7 +113,7 @@ class FinalProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\LecturersRelationManager::class,
         ];
     }
 

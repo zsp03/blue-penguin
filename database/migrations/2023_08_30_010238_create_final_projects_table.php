@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('final_projects', function (Blueprint $table) {
             $table->id();
-            $table->string('author');
-            $table->string('submitted_at');
+            $table->foreignId('student_id')->constrained();
             $table->string('title');
-            $table->string('supervisor');
-            $table->string('evaluator');
+            $table->date('submitted_at');
             $table->timestamps();
         });
     }

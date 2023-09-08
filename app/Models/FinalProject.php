@@ -4,21 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class FinalProject extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'author',
-        'submitted_at',
+        'student_id',
         'title',
-        'supervisor',
-        'evaluator'
+        'submitted_at',
     ];
 
-    protected $casts = [
-      'supervisor' => 'array',
-      'evaluator' => 'array'
-    ];
+    public function lecturers(): BelongsToMany
+    {
+        return $this->belongsToMany(Lecturer::class)->withPivot('role');
+    }
+
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(FinalProject::class);
+    }
 }
