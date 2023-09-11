@@ -21,7 +21,7 @@ class FinalProjectResource extends Resource
 {
     protected static ?string $model = FinalProject::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     public static function form(Form $form): Form
     {
@@ -42,7 +42,7 @@ class FinalProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('student_id.name')
+                Tables\Columns\TextColumn::make('student.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('submitted_at')
                     ->searchable(),
@@ -80,7 +80,7 @@ class FinalProjectResource extends Resource
                         foreach ($record->lecturers as $lecturer)
                         {
                             if ($lecturer->pivot->role == 'supervisor') {
-                                $list[] = $lecturer->image;
+                                $list[] = $lecturer;
                             }
                         }
                         return $list;

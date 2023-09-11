@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PublicationResource\Pages;
 use App\Filament\Resources\PublicationResource\RelationManagers;
 use App\Filament\Resources\PublicationResource\Widgets\PublicationStats;
+use App\Filament\Tables\Columns\AuthorsList;
 use App\Models\Publication;
 use App\Models\User;
 use Filament\Forms;
@@ -19,7 +20,7 @@ class PublicationResource extends Resource
 {
     protected static ?string $model = Publication::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     public static function form(Form $form): Form
     {
@@ -81,9 +82,11 @@ class PublicationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('lecturers.user.name')
-                    ->label('Authors')
-                    ->listWithLineBreaks(),
+//                Tables\Columns\ImageColumn::make('lecturers.image')
+//                    ->label('Authors')
+//                    ->circular()
+//                    ->stacked(),
+                AuthorsList::make('lecturers'),
                 Tables\Columns\TextColumn::make('link')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('year')

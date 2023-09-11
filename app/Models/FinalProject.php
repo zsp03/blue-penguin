@@ -24,6 +24,6 @@ class FinalProject extends Model
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo(FinalProject::class);
+        return $this->belongsTo(Student::class);
     }
 }

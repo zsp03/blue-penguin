@@ -17,6 +17,11 @@
                     </x-nav-link>
                 </div>
                 <!-- Tambahanku dari sini-->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('test') }}" :active="request()->routeIs('test')">
+                        {{ __('Test') }}
+                    </x-nav-link>
+                </div>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :inactive="request()->routeIs('dashboard')">
