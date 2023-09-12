@@ -17,7 +17,7 @@ class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'phosphor-student-fill';
 
     public static function form(Form $form): Form
     {

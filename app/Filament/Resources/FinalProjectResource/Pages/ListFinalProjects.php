@@ -10,10 +10,10 @@ use Filament\Resources\Pages\ListRecords;
 class ListFinalProjects extends ListRecords
 {
     protected static string $resource = FinalProjectResource::class;
-//    protected function getTableRecordUrlUsing(): ?Closure
-//    {
-//        return null;
-//    }
+    protected function getTableRecordUrlUsing(): ?Closure
+    {
+        return null;
+    }
     protected function getHeaderActions(): array
     {
         return [

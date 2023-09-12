@@ -86,7 +86,8 @@ class PublicationResource extends Resource
 //                    ->label('Authors')
 //                    ->circular()
 //                    ->stacked(),
-                AuthorsList::make('lecturers'),
+                AuthorsList::make('lecturers')
+                    ->label('Authors'),
                 Tables\Columns\TextColumn::make('link')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('year')

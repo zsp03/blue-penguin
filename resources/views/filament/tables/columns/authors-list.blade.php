@@ -1,7 +1,9 @@
-<div class="p-4 flex flex-col gap-1.5">
-    <div class="flex mb-5 -space-x-4">
+<div class="fi-ta-image px-3 py-4">
+    <div class="flex items-center gap-x-2.5">
+        <div class="flex -space-x-2">
         @foreach($getState() as $author)
-            <img x-data x-tooltip.raw="{{ $author->name }}" class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="{{ $getImageUrl($author->image) }}" alt="">
+            <img x-data x-tooltip.raw="{{ $author->name }}" src="{{ $getImageUrl($author->image) }}" style="height: 2rem; width: 2rem;" class="max-w-none object-cover object-center rounded-full bg-white ring-white dark:ring-gray-900 ring-2">
         @endforeach
+        </div>
     </div>
 </div>

@@ -24,11 +24,11 @@
                     </form>
                 </div>
             </div>
-            <div class="flex justify-center underline mt-36 gap-48 text-white text-xl font-bold flex-wrap">
+            <div class="p-6 grid grid-cols-3 gap-8 justify-items-center underline mt-36 text-white text-xl font-bold flex-wrap">
                 <div>
-                    <h3>
-                        Jurnal
-                    </h3>
+                    <div class="">
+                        @livewire(\App\Livewire\DashboardChart::class)
+                    </div>
                 </div>
                 <div>
                     <h3>

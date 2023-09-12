@@ -19,7 +19,7 @@ class LecturerResource extends Resource
 {
     protected static ?string $model = Lecturer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'phosphor-chalkboard-teacher';
 
     public static function form(Form $form): Form
     {
