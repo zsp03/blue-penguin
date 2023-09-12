@@ -6,14 +6,17 @@ use App\Filament\Resources\LecturerResource\Pages;
 use App\Filament\Resources\LecturerResource\RelationManagers;
 use App\Models\Lecturer;
 use App\Models\User;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class LecturerResource extends Resource
 {
@@ -32,7 +35,14 @@ class LecturerResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\FileUpload::make('image')
-                    ->directory('lecturer-images'),
+                    ->directory('lecturer-images')
+                    ->reactive()
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $set('image_url', Storage::disk()->url($state->getRealPath()));
+                    }),
+                Forms\Components\TextInput::make('image_url')
+                    ->label('URL')
+                    ->disabled(fn (Get $get) => count($get('image')) !== 0),
                 Forms\Components\TextInput::make('nip')
                     ->required()
                     ->maxLength(255),
@@ -48,7 +58,7 @@ class LecturerResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nip')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image')
+                Tables\Columns\ImageColumn::make('image_url')
                     ->circular(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

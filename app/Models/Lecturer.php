@@ -14,6 +14,7 @@ class Lecturer extends Model
         'user_id',
         'name',
         'image',
+        'image_url',
         'nip',
     ];
 

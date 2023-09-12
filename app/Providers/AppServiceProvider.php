@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         FilamentColor::register([
             'violet' => Color::hex('#6B33AF')
         ]);
