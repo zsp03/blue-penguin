@@ -31,7 +31,6 @@ return [
              */
 
              'path' => [
-                 'resources/svg',
                  'vendor/codeat3/blade-phosphor-icons/resources/svg',
              ],
 
