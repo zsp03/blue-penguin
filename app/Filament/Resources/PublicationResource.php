@@ -11,6 +11,7 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -56,7 +57,6 @@ class PublicationResource extends Resource
                             ->numeric()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('total_funds')
-                            ->numeric()
                             ->prefix('Rp.')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('fund_source')
@@ -111,7 +111,8 @@ class PublicationResource extends Resource
                 Tables\Columns\TextColumn::make('citation')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_funds')
-                    ->numeric()
+                    ->prefix('Rp. ')
+                    ->numeric(0,'.',',')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('fund_source')
                     ->searchable(),

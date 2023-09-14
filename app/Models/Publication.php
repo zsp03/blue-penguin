@@ -17,6 +17,7 @@ class Publication extends Model
         'year',
         'type',
         'citation',
+        'total_funds',
         'fund_source',
     ];
 
