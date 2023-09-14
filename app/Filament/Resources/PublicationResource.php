@@ -30,6 +30,7 @@ class PublicationResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('title')
                             ->required()
+                            ->columnSpan('full')
                             ->maxLength(255),
 //                    Forms\Components\Select::make('authors')
 //                    ->required()
@@ -53,6 +54,10 @@ class PublicationResource extends Resource
                             ]),
                         Forms\Components\TextInput::make('citation')
                             ->numeric()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('total_funds')
+                            ->numeric()
+                            ->prefix('Rp.')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('fund_source')
                             ->maxLength(255),
@@ -105,6 +110,9 @@ class PublicationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('citation')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('total_funds')
+                    ->numeric()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('fund_source')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -136,6 +144,7 @@ class PublicationResource extends Resource
     {
         return [
             RelationManagers\LecturerRelationManager::class,
+            RelationManagers\StudentsRelationManager::class,
         ];
     }
 

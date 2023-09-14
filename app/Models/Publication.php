@@ -28,4 +28,8 @@ class Publication extends Model
     {
        return $this->belongsToMany(Lecturer::class);
     }
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(Student::class);
+    }
 }
