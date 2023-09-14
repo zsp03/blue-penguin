@@ -31,9 +31,9 @@ class LecturerResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->live()
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('name', User::find((int)$state)->name))
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('name', User::find((int)$state)->name)),
+                Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('name'),
                 Forms\Components\FileUpload::make('image')
                     ->directory('lecturer-images')
                     ->reactive()
@@ -58,7 +58,7 @@ class LecturerResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nip')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image_url')
+                Tables\Columns\ImageColumn::make('image')
                     ->circular(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

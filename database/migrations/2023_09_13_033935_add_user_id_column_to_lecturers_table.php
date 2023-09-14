@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lecturers', function (Blueprint $table) {
-            $table->id();
-            $table->string('nip');
-            $table->timestamps();
+        Schema::table('lecturers', function (Blueprint $table) {
+            $table->foreignId('user_id')->after('id')->nullable()->constrained();
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lecturer');
+        Schema::table('lecturers', function (Blueprint $table) {
+            //
+        });
     }
 };
