@@ -58,6 +58,7 @@ class PublicationResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('total_funds')
                             ->prefix('Rp.')
+                            ->numeric()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('fund_source')
                             ->maxLength(255),
