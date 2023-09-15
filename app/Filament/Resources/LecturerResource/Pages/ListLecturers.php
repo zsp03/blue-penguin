@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\LecturerResource\Pages;
 
 use App\Filament\Resources\LecturerResource;
+use Closure;
 use Coolsam\FilamentExcel\Actions\ImportAction;
 use Coolsam\FilamentExcel\Actions\ImportField;
 use Filament\Actions;
@@ -11,7 +12,10 @@ use Filament\Resources\Pages\ListRecords;
 class ListLecturers extends ListRecords
 {
     protected static string $resource = LecturerResource::class;
-
+    protected function getTableRecordUrlUsing(): ?Closure
+    {
+        return null;
+    }
     protected function getHeaderActions(): array
     {
         return [
