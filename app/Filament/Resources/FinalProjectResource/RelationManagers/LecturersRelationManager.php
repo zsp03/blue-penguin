@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\FinalProjectResource\RelationManagers;
 
+use App\Models\Lecturer;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -20,7 +21,8 @@ class LecturersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->icon(fn (Lecturer $record) => $record->image_url ?: asset('assets/images/default_avatar.jpg')),
                 Tables\Columns\TextColumn::make('role')
                     ->formatStateUsing(fn (string $state): string => ucfirst($state))
             ])

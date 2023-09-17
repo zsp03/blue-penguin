@@ -13,6 +13,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -40,9 +41,8 @@ class PublicationResource extends Resource
 //                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
                         Forms\Components\TextInput::make('link')
                             ->maxLength(255),
-                        Forms\Components\DatePicker::make('year')
-                            ->native(false)
-                            ->displayFormat('Y'),
+                        Forms\Components\TextInput::make('year')
+                            ->numeric(),
                         Forms\Components\Select::make('type')
                             ->required()
                             ->native(false)
@@ -87,18 +87,29 @@ class PublicationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->limit(50)
+                    ->tooltip(function (TextColumn $column): ?string {
+                        $state = $column->getState();
+
+                        if (strlen($state) <= $column->getCharacterLimit()) {
+                            return null;
+                        }
+
+                        // Only render the tooltip if the column content exceeds the length limit.
+                        return $state;
+                    })
                     ->searchable(),
 //                Tables\Columns\ImageColumn::make('lecturers.image')
 //                    ->label('Authors')
 //                    ->circular()
 //                    ->stacked(),
                 AuthorsList::make('lecturers')
-                    ->label('Authors'),
-                Tables\Columns\TextColumn::make('link')
-                    ->searchable(),
+                    ->label('Tim Dosen Peneliti'),
+                TextColumn::make('students.name')
+                    ->label('Mahasiswa Terlibat')
+                    ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('year')
-                    ->date('Y')
-                    ->sortable(),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->badge()
@@ -109,14 +120,15 @@ class PublicationResource extends Resource
                         'info' => 'penelitian',
                     ])
                     ->searchable(),
-                Tables\Columns\TextColumn::make('citation')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('scale'),
                 Tables\Columns\TextColumn::make('total_funds')
                     ->prefix('Rp. ')
                     ->numeric(0,'.',',')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('fund_source')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('citation'),
+                Tables\Columns\TextColumn::make('link'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

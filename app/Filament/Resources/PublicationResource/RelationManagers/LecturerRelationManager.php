@@ -23,9 +23,8 @@ class LecturerRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->circular(),
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->icon(fn (Lecturer $record) => $record->image_url ?: asset('assets/images/default_avatar.jpg')),
             ])
             ->filters([
                 //
@@ -34,7 +33,6 @@ class LecturerRelationManager extends RelationManager
                 Tables\Actions\AttachAction::make()
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('link')->nullable();
-            $table->date('year')->nullable();
+            $table->integer('year')->nullable();
             $table->string('type');
             $table->string('citation')->nullable();
             $table->string('fund_source')->nullable();

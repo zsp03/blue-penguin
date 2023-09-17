@@ -5,18 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FinalProjectResource\Pages;
 use App\Filament\Resources\FinalProjectResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
-use App\Filament\Tables\Columns\SupervisorList;
 use App\Models\FinalProject;
-use App\Models\Lecturer;
 use App\Models\Student;
-use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FinalProjectResource extends Resource
 {
@@ -63,6 +58,7 @@ class FinalProjectResource extends Resource
                 Tables\Columns\TextColumn::make('student.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('submitted_at')
+                    ->date('d F Y')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),

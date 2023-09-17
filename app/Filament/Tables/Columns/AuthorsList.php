@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 class AuthorsList extends Column
 {
     protected string $view = 'filament.tables.columns.authors-list';
-
     public function getDisk(): Filesystem
     {
         return Storage::disk(config('filament.default_filesystem_disk'));
@@ -18,5 +17,9 @@ class AuthorsList extends Column
     public function getImageUrl($path): string
     {
         return $this->getDisk()->url($path);
+    }
+    public function getDefaultAvatar(): string
+    {
+        return asset('assets/images/default_avatar.jpg');
     }
 }

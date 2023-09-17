@@ -1,0 +1,11 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config './tailwind.config.js';
+
+.fi-ta-text-item-icon {
+    @apply w-9 h-9 object-cover object-center rounded-full bg-white ring-white dark:ring-gray-900 ring-2;
+}
+
+.fi-badge > span > span {
+    overflow: visible;
+}

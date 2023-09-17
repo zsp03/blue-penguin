@@ -16,6 +16,7 @@ class Publication extends Model
         'link',
         'year',
         'type',
+        'scale',
         'citation',
         'total_funds',
         'fund_source',

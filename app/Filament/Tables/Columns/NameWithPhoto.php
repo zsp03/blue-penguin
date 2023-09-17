@@ -6,9 +6,9 @@ use Filament\Tables\Columns\Column;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 
-class SupervisorList extends Column
+class NameWithPhoto extends Column
 {
-    protected string $view = 'filament.tables.columns.supervisor-list';
+    protected string $view = 'filament.tables.columns.name-with-photo';
 
     public function getDisk(): Filesystem
     {
@@ -17,5 +17,9 @@ class SupervisorList extends Column
     public function getImageUrl($path): string
     {
         return $this->getDisk()->url($path);
+    }
+    public function getDefaultAvatar(): string
+    {
+        return asset('assets/images/default_avatar.jpg');
     }
 }

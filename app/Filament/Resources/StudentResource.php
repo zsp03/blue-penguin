@@ -31,7 +31,6 @@ class StudentResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
-                    ->required()
                     ->maxLength(255),
             ]);
     }
@@ -43,6 +42,7 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nim')
+                    ->copyable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
