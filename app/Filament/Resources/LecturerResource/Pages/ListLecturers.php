@@ -12,10 +12,6 @@ use Filament\Resources\Pages\ListRecords;
 class ListLecturers extends ListRecords
 {
     protected static string $resource = LecturerResource::class;
-    protected function getTableRecordUrlUsing(): ?Closure
-    {
-        return null;
-    }
     protected function getHeaderActions(): array
     {
         return [

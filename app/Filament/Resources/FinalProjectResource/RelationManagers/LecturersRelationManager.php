@@ -20,10 +20,17 @@ class LecturersRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('name')
+            ->defaultSort('role', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->icon(fn (Lecturer $record) => $record->image_url ?: asset('assets/images/default_avatar.jpg')),
                 Tables\Columns\TextColumn::make('role')
+                    ->badge()
+                    ->colors([
+                        'info' => 'supervisor 1',
+                        'success' => 'supervisor 2',
+                        'violet' => 'evaluator'
+                    ])
                     ->formatStateUsing(fn (string $state): string => ucfirst($state))
             ])
             ->filters([
@@ -35,8 +42,9 @@ class LecturersRelationManager extends RelationManager
                     Forms\Components\Select::make('role')
                         ->native(false)
                         ->options([
-                            'supervisor' => 'Supervisor',
-                            'evaluator' => 'Evaluator'
+                            'supervisor 1' => 'Supervisor 1',
+                            'supervisor 2' => 'Supervisor 2',
+                            'evaluator' => 'Evaluator',
                         ])
                         ->required(),
                 ])
@@ -55,7 +63,8 @@ class LecturersRelationManager extends RelationManager
                     Forms\Components\Select::make('role')
                         ->native(false)
                         ->options([
-                            'supervisor' => 'Supervisor',
+                            'supervisor 1' => 'Supervisor 1',
+                            'supervisor 2' => 'Supervisor 2',
                             'evaluator' => 'Evaluator'
                         ])
                         ->required(),

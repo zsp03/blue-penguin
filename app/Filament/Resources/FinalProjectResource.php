@@ -5,12 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FinalProjectResource\Pages;
 use App\Filament\Resources\FinalProjectResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
+use App\Filament\Tables\Columns\SupervisorsList;
 use App\Models\FinalProject;
 use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class FinalProjectResource extends Resource
@@ -61,13 +63,24 @@ class FinalProjectResource extends Resource
                     ->date('d F Y')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
+                    ->limit(50)
+                    ->tooltip(function (TextColumn $column): ?string {
+                        $state = $column->getState();
+
+                        if (strlen($state) <= $column->getCharacterLimit()) {
+                            return null;
+                        }
+
+                        // Only render the tooltip if the column content exceeds the length limit.
+                        return $state;
+                    })
                     ->searchable(),
-                AuthorsList::make('supervisor')
+                SupervisorsList::make('supervisor')
                     ->state(function (FinalProject $record) {
                         $list = [];
                         foreach ($record->lecturers as $lecturer)
                         {
-                            if ($lecturer->pivot->role == 'supervisor') {
+                            if (in_array($lecturer->pivot->role, ['supervisor 1', 'supervisor 2'])) {
                                 $list[] = $lecturer;
                             }
                         }

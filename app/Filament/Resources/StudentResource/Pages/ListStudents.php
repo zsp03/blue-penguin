@@ -3,10 +3,10 @@
 namespace App\Filament\Resources\StudentResource\Pages;
 
 use App\Filament\Resources\StudentResource;
-use Coolsam\FilamentExcel\Actions\ImportAction;
-use Coolsam\FilamentExcel\Actions\ImportField;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Konnco\FilamentImport\Actions\ImportAction;
+use Konnco\FilamentImport\Actions\ImportField;
 
 class ListStudents extends ListRecords
 {
@@ -16,7 +16,8 @@ class ListStudents extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            ImportAction::make('students')->fields([
+            ImportAction::make('students')
+                ->fields([
                 ImportField::make('name')->required(),
                 ImportField::make('nim')->required(),
             ]),
