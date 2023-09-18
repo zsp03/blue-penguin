@@ -103,15 +103,16 @@ class LecturerResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->recordUrl(null)
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama')
                     ->icon(fn (Lecturer $record) => $record->image_url ?: asset('assets/images/default_avatar.jpg'))
                     ->searchable()
+                    ->copyable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nip')
                     ->label('NIP')
+                    ->copyable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
