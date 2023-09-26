@@ -30,42 +30,53 @@ class PublicationResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->columnSpan('full')
-                            ->maxLength(255),
-//                    Forms\Components\Select::make('authors')
-//                    ->required()
-//                    ->multiple()
-//                    ->getSearchResultsUsing(fn (string $search): array => User::where('name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
-//                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray()),
-                        Forms\Components\TextInput::make('link')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('year')
-                            ->numeric(),
-                        Forms\Components\Select::make('type')
-                            ->required()
-                            ->native(false)
-                            ->selectablePlaceholder(false)
-                            ->options([
-                                'jurnal' => 'Jurnal',
-                                'prosiding' => 'Prosiding',
-                                'penelitian' => 'Penelitian',
-                                'pengabdian' => 'Pengabdian',
-                            ]),
-                        Forms\Components\TextInput::make('citation')
-                            ->numeric()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('total_funds')
-                            ->prefix('Rp.')
-                            ->numeric()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('fund_source')
-                            ->maxLength(255),
-
-                    ])
-                    ->columns(2)
-                    ->columnSpan(['lg' => fn (?Publication $record) => $record === null ? 3 : 2]),
+                        Forms\Components\Section::make('Informasi Utama')
+                            ->schema([
+                                Forms\Components\TextInput::make('title')
+                                    ->required()
+                                    ->columnSpan('full')
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('year')
+                                    ->numeric(),
+                                Forms\Components\Select::make('type')
+                                    ->required()
+                                    ->native(false)
+                                    ->selectablePlaceholder(false)
+                                    ->options([
+                                        'jurnal' => 'Jurnal',
+                                        'prosiding' => 'Prosiding',
+                                        'penelitian' => 'Penelitian',
+                                        'pengabdian' => 'Pengabdian',
+                                    ]),
+                                Forms\Components\TextInput::make('total_funds')
+                                    ->prefix('Rp.')
+                                    ->numeric()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('fund_source')
+                                    ->maxLength(255),
+                            ])
+                            ->collapsible()
+                            ->columns(2),
+                        Forms\Components\Section::make('Informasi Tambahan')
+                        ->schema([
+                            Forms\Components\TextInput::make('link')
+                                ->label('Link Bukti')
+                                ->columnSpan('full')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('citation')
+                                ->numeric()
+                                ->maxLength(255),
+                            Forms\Components\Select::make('scale')
+                                ->label('Skala')
+                                ->native(false)
+                                ->options([
+                                    'Nasional' => 'Nasional',
+                                    'Internasional' => 'Internasional',
+                                ]),
+                        ])
+                            ->columns(2)
+                            ->collapsible(),
+                    ])->columnSpan(['lg' => fn (?Publication $record) => $record === null ? 3 : 2]),
 
                 Forms\Components\Section::make()
                     ->schema([
@@ -87,6 +98,7 @@ class PublicationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Judul')
                     ->limit(50)
                     ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
@@ -99,10 +111,6 @@ class PublicationResource extends Resource
                         return $state;
                     })
                     ->searchable(),
-//                Tables\Columns\ImageColumn::make('lecturers.image')
-//                    ->label('Authors')
-//                    ->circular()
-//                    ->stacked(),
                 AuthorsList::make('lecturers')
                     ->label('Tim Dosen Peneliti'),
                 TextColumn::make('students.name')
@@ -120,15 +128,19 @@ class PublicationResource extends Resource
                         'info' => 'penelitian',
                     ])
                     ->searchable(),
-                Tables\Columns\TextColumn::make('scale'),
-                Tables\Columns\TextColumn::make('total_funds')
-                    ->prefix('Rp. ')
-                    ->numeric(0,'.',',')
+                Tables\Columns\TextColumn::make('scale')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('total_funds')
+                    ->label('Total Dana')
+                    ->prefix('Rp. ')
+                    ->numeric(0,'.',','),
                 Tables\Columns\TextColumn::make('fund_source')
+                    ->label('Sumber Dana')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('citation'),
-                Tables\Columns\TextColumn::make('link'),
+                Tables\Columns\ViewColumn::make('link')
+                    ->label('Bukti')
+                    ->view('filament.tables.columns.click-here'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

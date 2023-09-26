@@ -65,7 +65,7 @@ class LecturerResource extends Resource
                                             ->schema([
                                                 Forms\Components\TextInput::make('image_url')
                                                     ->label('URL')
-                                                    ->disabled(fn (Get $get) => count($get('image')) !== 0),
+                                                    ->disabled(fn (Get $get) => !empty($get('image'))),
                                             ]),
                                     ])
                                     ->columnSpan('full'),

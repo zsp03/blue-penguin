@@ -10,7 +10,7 @@ use Closure;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Carbon;
-use Konnco\FilamentImport\Actions\ImportAction;
+use App\Actions\FilamentImport\Action\ImportAction;
 use Konnco\FilamentImport\Actions\ImportField;
 
 class ListFinalProjects extends ListRecords
