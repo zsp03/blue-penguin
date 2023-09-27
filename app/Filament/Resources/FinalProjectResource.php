@@ -56,11 +56,9 @@ class FinalProjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('submitted_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('student.name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('submitted_at')
-                    ->date('d F Y')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->limit(50)
@@ -97,6 +95,9 @@ class FinalProjectResource extends Resource
                         }
                         return $list;
                     }),
+                Tables\Columns\TextColumn::make('submitted_at')
+                    ->date('d F Y')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
