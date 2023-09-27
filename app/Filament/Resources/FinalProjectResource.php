@@ -29,7 +29,9 @@ class FinalProjectResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('student_id')
                             ->native(false)
-                            ->options(Student::all()->pluck('name', 'id')),
+                            ->relationship('student')
+                            ->getOptionLabelFromRecordUsing(fn (Student $record) => "{$record->name} - {$record->nim}")
+                            ->searchable(['name', 'nim']),
                         Forms\Components\TextInput::make('title')
                             ->required()
                             ->maxLength(255),
@@ -59,19 +61,23 @@ class FinalProjectResource extends Resource
             ->defaultSort('submitted_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('student.name')
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap()
+                    ->description(fn (FinalProject $record): string => $record->student->nim),
                 Tables\Columns\TextColumn::make('title')
-                    ->limit(50)
-                    ->tooltip(function (TextColumn $column): ?string {
-                        $state = $column->getState();
-
-                        if (strlen($state) <= $column->getCharacterLimit()) {
-                            return null;
-                        }
-
-                        // Only render the tooltip if the column content exceeds the length limit.
-                        return $state;
-                    })
+//                    ->limit(50)
+//                    ->tooltip(function (TextColumn $column): ?string {
+//                        $state = $column->getState();
+//
+//                        if (strlen($state) <= $column->getCharacterLimit()) {
+//                            return null;
+//                        }
+//
+//                        // Only render the tooltip if the column content exceeds the length limit.
+//                        return $state;
+//                    })
+                    ->wrap()
+                    ->visibleFrom('md')
                     ->searchable(),
                 SupervisorsList::make('supervisor')
                     ->state(function (FinalProject $record) {
