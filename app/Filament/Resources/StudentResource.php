@@ -38,6 +38,7 @@ class StudentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
@@ -82,8 +83,8 @@ class StudentResource extends Resource
     {
         return [
             'index' => Pages\ListStudents::route('/'),
-            'create' => Pages\CreateStudent::route('/create'),
-            'edit' => Pages\EditStudent::route('/{record}/edit'),
+//            'create' => Pages\CreateStudent::route('/create'),
+//            'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }
 }
