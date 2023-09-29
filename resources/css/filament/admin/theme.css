@@ -2,7 +2,7 @@
 
 @config './tailwind.config.js';
 
-.fi-ta-text-item-icon {
+.fi-table-cell-name .fi-ta-text-item-icon {
     @apply w-9 h-9 object-cover object-center rounded-full bg-white ring-white dark:ring-gray-900 ring-2;
 }
 

@@ -8,6 +8,7 @@ use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,21 +42,28 @@ class StudentResource extends Resource
             ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Large)
+                    ->weight(FontWeight::Bold)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nim')
                     ->copyable()
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Small)
+                    ->weight(FontWeight::Medium)
+                    ->icon('phosphor-identification-card-fill')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Small)
+                    ->weight(FontWeight::Medium)
+                    ->icon('heroicon-m-envelope')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\Layout\Grid::make(),
             ])
+            ->contentGrid([
+                'md' => 2,
+                'xl' => 3,
+            ])
+            ->paginated([6, 12, 24, 48, 96, 'all'])
+            ->defaultPaginationPageOption(12)
             ->filters([
                 //
             ])
