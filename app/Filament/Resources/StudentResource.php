@@ -41,18 +41,23 @@ class StudentResource extends Resource
         return $table
             ->defaultSort('updated_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->size(Tables\Columns\TextColumn\TextColumnSize::Large)
-                    ->weight(FontWeight::Bold)
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nim')
-                    ->copyable()
-                    ->size(Tables\Columns\TextColumn\TextColumnSize::Small)
-                    ->weight(FontWeight::Medium)
-                    ->icon('phosphor-identification-card-fill')
-                    ->searchable(),
+                Tables\Columns\Layout\Stack::make([
+                    Tables\Columns\TextColumn::make('name')
+                        ->size(Tables\Columns\TextColumn\TextColumnSize::Large)
+                        ->weight(FontWeight::Bold)
+                        ->sortable()
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('nim')
+                        ->copyable()
+                        ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
+                        ->weight(FontWeight::Medium)
+                        ->icon('phosphor-identification-card-fill')
+                        ->sortable()
+                        ->searchable(),
+                ])->space(2),
+
                 Tables\Columns\TextColumn::make('email')
-                    ->size(Tables\Columns\TextColumn\TextColumnSize::Small)
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
                     ->weight(FontWeight::Medium)
                     ->icon('heroicon-m-envelope')
                     ->searchable(),
@@ -69,6 +74,7 @@ class StudentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
