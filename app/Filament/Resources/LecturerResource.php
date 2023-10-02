@@ -116,6 +116,8 @@ class LecturerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama')
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
+                    ->weight(\Filament\Support\Enums\FontWeight::Medium)
                     ->icon(fn (Lecturer $record) => $record->image_url ?: asset('assets/images/default_avatar.jpg'))
                     ->searchable()
                     ->copyable()

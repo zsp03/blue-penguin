@@ -2,12 +2,12 @@
 
 @config './tailwind.config.js';
 
-.fi-table-cell-name .fi-ta-text-item-icon {
-    @apply w-9 h-9 object-cover object-center rounded-full bg-white ring-white dark:ring-gray-900 ring-2;
-}
-
 .fi-ta-col-wrp .fi-ta-text-item-icon{
     @apply w-6 h-6
+}
+
+.fi-table-cell-name .fi-ta-text-item-icon {
+    @apply w-12 h-12 mr-2 object-cover object-center rounded-full bg-white ring-white dark:ring-gray-900 ring-2;
 }
 
 .fi-logo {
