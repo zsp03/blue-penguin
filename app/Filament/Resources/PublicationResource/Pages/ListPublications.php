@@ -7,6 +7,7 @@ use App\Models\Lecturer;
 use App\Models\Publication;
 use App\Models\Student;
 use Filament\Actions;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Konnco\FilamentImport\Actions\ImportAction;
 use Konnco\FilamentImport\Actions\ImportField;
@@ -92,15 +93,15 @@ class ListPublications extends ListRecords
     public function getTabs(): array
     {
         return [
-            null => ListRecords\Tab::make('All'),
-            'jurnal' => ListRecords\Tab::make()
-                ->query(fn ($query) => $query->where('type', 'jurnal')),
-            'prosiding' => ListRecords\Tab::make()
-                ->query(fn ($query) => $query->where('type', 'prosiding')),
-            'penelitian' => ListRecords\Tab::make()
-                ->query(fn ($query) => $query->where('type', 'penelitian')),
-            'pengabdian' => ListRecords\Tab::make()
-                ->query(fn ($query) => $query->where('type', 'pengabdian')),
+            // null => Tab::make('All'),
+            // 'jurnal' => Tab::make()
+            //     ->query(fn ($query) => $query->where('type', 'jurnal')),
+            // 'prosiding' => Tab::make()
+            //     ->query(fn ($query) => $query->where('type', 'prosiding')),
+            // 'penelitian' => Tab::make()
+            //     ->query(fn ($query) => $query->where('type', 'penelitian')),
+            // 'pengabdian' => Tab::make()
+            //     ->query(fn ($query) => $query->where('type', 'pengabdian')),
         ];
     }
 }

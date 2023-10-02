@@ -38,6 +38,9 @@ class AdminPanelProvider extends PanelProvider
             ->pages([])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([])
+            ->plugins([
+                \pxlrbt\FilamentSpotlight\SpotlightPlugin::make(),
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

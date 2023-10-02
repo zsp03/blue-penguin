@@ -17,6 +17,15 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $recordTitleAttribute = 'email';
+
+    public static function getGlobalSearchResultDetails(\Illuminate\Database\Eloquent\Model $record): array
+    {
+        return [
+            '' => $record->name,
+        ];
+    }
+
     protected static ?string $navigationIcon = 'phosphor-users-four';
 
     public static function form(Form $form): Form

@@ -12,11 +12,21 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            '' => $record->nim,
+        ];
+    }
 
     protected static ?string $navigationIcon = 'phosphor-student-fill';
 
@@ -97,8 +107,8 @@ class StudentResource extends Resource
     {
         return [
             'index' => Pages\ListStudents::route('/'),
-//            'create' => Pages\CreateStudent::route('/create'),
-//            'edit' => Pages\EditStudent::route('/{record}/edit'),
+            'create' => Pages\CreateStudent::route('/create'),
+            'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }
 }

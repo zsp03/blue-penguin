@@ -7,6 +7,7 @@ use App\Filament\Resources\PublicationResource\RelationManagers;
 use App\Filament\Resources\PublicationResource\Widgets\PublicationStats;
 use App\Filament\Tables\Columns\AuthorsList;
 use App\Models\Publication;
+use App\Models\Student;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class PublicationResource extends Resource
 {
     protected static ?string $model = Publication::class;
+    protected static ?string $recordTitleAttribute = 'title';
+
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -151,8 +154,52 @@ class PublicationResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('lecturers')
+                    ->native(false)
+                    ->label('Dosen Peneliti')
+                    ->searchable()
+                    ->multiple()
+                    ->preload()
+                    ->relationship('lecturers', 'name'),
+                Tables\Filters\SelectFilter::make('students')
+                    ->native(false)
+                    ->label('Mahasiswa Terlibat')
+                    ->searchable()
+                    ->multiple()
+                    ->getOptionLabelFromRecordUsing(fn (Student $record) => "{$record->name} - {$record->nim}")
+                    ->relationship('students', 'name'),
+                Tables\Filters\SelectFilter::make('type')
+                    ->options([
+                        'jurnal' => 'Jurnal',
+                        'penelitian' => 'Penelitian',
+                        'prosiding' => 'Prosiding',
+                        'pengabdian' => 'Pengabdian',
+                    ])
+                    ->multiple()
+                    ->native(false),
+                Tables\Filters\Filter::make('year')
+                    ->form([
+                        Forms\Components\TextInput::make('year_from')
+                            ->label('Dari Tahun')
+                            ->numeric()
+                            ->minValue(0),
+                        Forms\Components\TextInput::make('year_until')
+                            ->label('Sampai Tahun')
+                            ->numeric()
+                            ->minValue(0),
+                    ])->columns(2)
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['year_from'],
+                                fn (Builder $query, $date): Builder => $query->where('year', '>=', $date),
+                            )
+                            ->when(
+                                $data['year_until'],
+                                fn (Builder $query, $date): Builder => $query->where('year', '<=', $date),
+                            );
+                    })
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)->filtersFormColumns(4)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

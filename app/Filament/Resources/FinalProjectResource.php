@@ -14,10 +14,26 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class FinalProjectResource extends Resource
 {
     protected static ?string $model = FinalProject::class;
+
+    protected static ?string $recordTitleAttribute = 'title';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            '' => $record->student->name,
+        ];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['student']);
+    }
 
     protected static ?string $navigationIcon = 'phosphor-article-bold';
 

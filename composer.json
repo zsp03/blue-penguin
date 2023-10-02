@@ -21,7 +21,8 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^3.0",
-        "predis/predis": "^2.2"
+        "predis/predis": "^2.2",
+        "pxlrbt/filament-spotlight": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
