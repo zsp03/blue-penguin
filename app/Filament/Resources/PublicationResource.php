@@ -17,6 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PublicationResource extends Resource
@@ -24,6 +25,25 @@ class PublicationResource extends Resource
     protected static ?string $model = Publication::class;
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'lecturers.name'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        $lecturerList = [];
+        foreach ($record->lecturers as $lecturer){
+            $lecturerList[] = $lecturer->name;
+        }
+        $newArray = array_combine(range(1, count($lecturerList)), array_values($lecturerList));
+        return $newArray;
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with('lecturers');
+    }
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -182,10 +202,12 @@ class PublicationResource extends Resource
                         Forms\Components\TextInput::make('year_from')
                             ->label('Dari Tahun')
                             ->numeric()
+                            ->placeholder(Publication::min('year'))
                             ->minValue(0),
                         Forms\Components\TextInput::make('year_until')
                             ->label('Sampai Tahun')
                             ->numeric()
+                            ->placeholder(now()->year)
                             ->minValue(0),
                     ])->columns(2)
                     ->query(function (Builder $query, array $data): Builder {

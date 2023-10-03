@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
@@ -19,7 +20,12 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'email';
 
-    public static function getGlobalSearchResultDetails(\Illuminate\Database\Eloquent\Model $record): array
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['email', 'name'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
             '' => $record->name,
