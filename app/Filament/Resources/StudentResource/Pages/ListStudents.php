@@ -22,6 +22,7 @@ class ListStudents extends ListRecords
                 ->fields([
                     ImportField::make('name')->required(),
                     ImportField::make('nim')->required(),
+                    ImportField::make('email'),
                 ])
         ];
     }
