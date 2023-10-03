@@ -45,17 +45,23 @@ class ListPublications extends ListRecords
                         'link',
                     ];
 
+                    $isStudentsEmpty = empty($data['students']);
+
                     $lecturerIds = function () use ($data) {
                         $explodedLecturersData = explode(', ', $data['authors']);
                         $lecturers = Lecturer::whereIn('nip', $explodedLecturersData)->get();
                         return $lecturers->pluck('id')->toArray();
                     };
 
-                    $studentIds = function () use ($data) {
-                        $explodedStudentsData = explode(', ', $data['students']);
-                        $students = Student::whereIn('nim', $explodedStudentsData)->get();
-                        return $students->pluck('id')->toArray();
-                    };
+                    if ($isStudentsEmpty) {
+                        $studentIds = [];
+                    } else {
+                        $studentIds = function () use ($data) {
+                            $explodedStudentsData = explode(', ', $data['students']);
+                            $students = Student::whereIn('nim', $explodedStudentsData)->get();
+                            return $students->pluck('id')->toArray();
+                        };
+                    }
 
                     $lecturersId = $lecturerIds();
                     $studentsId = $studentIds();
@@ -73,10 +79,13 @@ class ListPublications extends ListRecords
                         }
                     }
 
-                    $newPublication = function () use ($newData, $lecturersId, $studentsId) {
+                    $newPublication = function () use ($newData, $lecturersId, $isStudentsEmpty, $studentsId) {
                         $publication = Publication::create($newData);
                         $publication->lecturers()->attach($lecturersId);
-                        $publication->students()->attach($studentsId);
+
+                        if (!$isStudentsEmpty){
+                            $publication->students()->attach($studentsId);
+                        }
 
                         return $publication;
                     };
