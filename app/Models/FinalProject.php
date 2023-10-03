@@ -14,6 +14,7 @@ class FinalProject extends Model
     protected $fillable = [
         'student_id',
         'title',
+        'status',
         'submitted_at',
     ];
 

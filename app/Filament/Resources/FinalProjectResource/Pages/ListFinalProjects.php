@@ -32,12 +32,14 @@ class ListFinalProjects extends ListRecords
                     ImportField::make('supervisorTwo'),
                     ImportField::make('evaluatorOne'),
                     ImportField::make('evaluatorTwo'),
-                    ImportField::make('submitted_at')
+                    ImportField::make('submitted_at'),
+                    ImportField::make('status')
                 ])
                 ->handleRecordCreation(function ($data) {
                     $keysToAdd = [
                         'title',
-                        'submitted_at'
+                        'submitted_at',
+                        'status',
                     ];
 
                     $evaluatorList = [

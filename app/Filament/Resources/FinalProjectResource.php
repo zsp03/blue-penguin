@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class FinalProjectResource extends Resource
 {
@@ -57,7 +58,13 @@ class FinalProjectResource extends Resource
                             ->required()
                             ->maxLength(255),
                         Forms\Components\DatePicker::make('submitted_at')
-                            ->required()
+                            ->required(),
+                        Forms\Components\Select::make('status')
+                            ->options([
+                                "Ongoing" => "Ongoing",
+                                "Finalizing" => "Finalizing",
+                                "Done" => 'Done',
+                            ])
                     ])
                     ->columns(2)
                     ->columnSpan(['lg' => fn (?FinalProject $record) => $record === null ? 3 : 2]),
@@ -125,6 +132,34 @@ class FinalProjectResource extends Resource
                 Tables\Columns\TextColumn::make('submitted_at')
                     ->date('d F Y')
                     ->searchable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->colors([
+                        'gray' => 'Ongoing',
+                        'info' => 'Finalizing',
+                        'success' => 'Done'
+                    ]),
+                TextColumn::make('time_elapsed')
+                    ->label('')
+                    ->state(function (FinalProject $record) {
+                        if ($record->status == 'Done'){
+                            return '';
+                        } else {
+                            $start_date = Carbon::parse($record->submitted_at);
+                            $elapsed_day = $start_date->diffInDays(now());
+                            return "$elapsed_day" . " Hari";
+                        }
+                    })
+                    ->color(function (FinalProject $record) {
+                        $start_date = Carbon::parse($record->submitted_at);
+                        if ($start_date->diffInDays(now()) >= 180) {
+                            return 'danger';
+                        } elseif ($start_date->diffInDays(now()) >= 90)
+                        {
+                            return 'warning';
+                        } else return 'success';
+                    })
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
