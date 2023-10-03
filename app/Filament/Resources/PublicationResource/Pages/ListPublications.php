@@ -53,15 +53,15 @@ class ListPublications extends ListRecords
                         return $lecturers->pluck('id')->toArray();
                     };
 
-                    if ($isStudentsEmpty) {
-                        $studentIds = [];
-                    } else {
-                        $studentIds = function () use ($data) {
+                    $studentIds = function () use ($data, $isStudentsEmpty) {
+                        if ($isStudentsEmpty) {
+                            return null;
+                        } else {
                             $explodedStudentsData = explode(', ', $data['students']);
                             $students = Student::whereIn('nim', $explodedStudentsData)->get();
                             return $students->pluck('id')->toArray();
-                        };
-                    }
+                        }
+                    };
 
                     $lecturersId = $lecturerIds();
                     $studentsId = $studentIds();
@@ -79,11 +79,11 @@ class ListPublications extends ListRecords
                         }
                     }
 
-                    $newPublication = function () use ($newData, $lecturersId, $isStudentsEmpty, $studentsId) {
+                    $newPublication = function () use ($newData, $lecturersId, $studentsId) {
                         $publication = Publication::create($newData);
                         $publication->lecturers()->attach($lecturersId);
 
-                        if (!$isStudentsEmpty){
+                        if ($studentsId !== null){
                             $publication->students()->attach($studentsId);
                         }
 
