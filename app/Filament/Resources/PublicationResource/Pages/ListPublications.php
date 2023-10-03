@@ -55,7 +55,7 @@ class ListPublications extends ListRecords
 
                     $studentIds = function () use ($data, $isStudentsEmpty) {
                         if ($isStudentsEmpty) {
-                            return null;
+                            return array();
                         } else {
                             $explodedStudentsData = explode(', ', $data['students']);
                             $students = Student::whereIn('nim', $explodedStudentsData)->get();
@@ -83,7 +83,7 @@ class ListPublications extends ListRecords
                         $publication = Publication::create($newData);
                         $publication->lecturers()->attach($lecturersId);
 
-                        if ($studentsId !== null){
+                        if (!empty($studentsId)){
                             $publication->students()->attach($studentsId);
                         }
 
