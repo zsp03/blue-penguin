@@ -168,7 +168,7 @@ class FinalProjectResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->deferLoading()
             ->filters([
                 //
             ])

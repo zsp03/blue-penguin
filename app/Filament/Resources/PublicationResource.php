@@ -172,7 +172,7 @@ class PublicationResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->deferLoading()
             ->filters([
                 Tables\Filters\SelectFilter::make('lecturers')
                     ->native(false)
