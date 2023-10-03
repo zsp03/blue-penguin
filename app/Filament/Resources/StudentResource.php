@@ -39,9 +39,11 @@ class StudentResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nim')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
             ]);
     }
