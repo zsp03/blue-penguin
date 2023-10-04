@@ -163,9 +163,9 @@ class FinalProjectResource extends Resource
                     Forms\Components\Select::make('elapsed_time')
                         ->native(false)
                         ->options([
-                            'okay' => '<span class="text-success-400">Less than 90 days</span>' ,
-                            'warning' => '<span class="text-warning-400">90 to 180 days</span>',
-                            'danger' => '<span class="text-danger-400">More than 180 days</span>',
+                            'okay' => '<span class="font-medium text-success-600 dark:text-success-400">Less than 90 days</span>' ,
+                            'warning' => '<span class="font-medium text-warning-600 dark:text-warning-400">90 to 180 days</span>',
+                            'danger' => '<span class="font-medium text-danger-600 dark:text-danger-400">More than 180 days</span>',
                         ])
                         ->allowHtml(),
                 ])
