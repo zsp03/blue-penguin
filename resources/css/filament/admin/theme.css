@@ -2,6 +2,10 @@
 
 @config './tailwind.config.js';
 
+:-moz-focusring {
+    outline:none
+}
+
 .fi-ta-col-wrp .fi-ta-text-item-icon{
     @apply w-6 h-6
 }

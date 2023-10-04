@@ -24,6 +24,7 @@ class PublicationResource extends Resource
 {
     protected static ?string $model = Publication::class;
     protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $navigationGroup = 'Content';
 
     public static function getGloballySearchableAttributes(): array
     {
@@ -200,16 +201,19 @@ class PublicationResource extends Resource
                 Tables\Filters\Filter::make('year')
                     ->form([
                         Forms\Components\TextInput::make('year_from')
-                            ->label('Dari Tahun')
+                            ->label('Dari')
                             ->numeric()
                             ->placeholder(Publication::min('year'))
                             ->minValue(0),
                         Forms\Components\TextInput::make('year_until')
-                            ->label('Sampai Tahun')
+                            ->label('Sampai')
                             ->numeric()
                             ->placeholder(now()->year)
                             ->minValue(0),
-                    ])->columns(2)
+                    ])
+                    ->columns([
+                        'sm' => 2,
+                    ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
@@ -221,7 +225,11 @@ class PublicationResource extends Resource
                                 fn (Builder $query, $date): Builder => $query->where('year', '<=', $date),
                             );
                     })
-            ], layout: Tables\Enums\FiltersLayout::AboveContent)->filtersFormColumns(4)
+            ], layout: Tables\Enums\FiltersLayout::AboveContent)
+            ->filtersFormColumns([
+                'md' => 2,
+                'lg' => 4
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

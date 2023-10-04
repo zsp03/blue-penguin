@@ -33,6 +33,7 @@ class LecturerResource extends Resource
     }
 
     protected static ?string $navigationIcon = 'phosphor-chalkboard-teacher';
+    protected static ?string $navigationGroup = 'Management';
 
     public static function form(Form $form): Form
     {

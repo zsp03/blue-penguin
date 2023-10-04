@@ -23,6 +23,7 @@ class FinalProjectResource extends Resource
     protected static ?string $model = FinalProject::class;
 
     protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $navigationGroup = 'Content';
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
@@ -93,19 +94,7 @@ class FinalProjectResource extends Resource
                     ->wrap()
                     ->description(fn (FinalProject $record): string => $record->student->nim),
                 Tables\Columns\TextColumn::make('title')
-//                    ->limit(50)
-//                    ->tooltip(function (TextColumn $column): ?string {
-//                        $state = $column->getState();
-//
-//                        if (strlen($state) <= $column->getCharacterLimit()) {
-//                            return null;
-//                        }
-//
-//                        // Only render the tooltip if the column content exceeds the length limit.
-//                        return $state;
-//                    })
                     ->wrap()
-                    ->visibleFrom('md')
                     ->searchable(),
                 SupervisorsList::make('supervisor')
                     ->state(function (FinalProject $record) {
@@ -170,8 +159,33 @@ class FinalProjectResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->deferLoading()
             ->filters([
-                //
+                Tables\Filters\Filter::make('time')->form([
+                    Forms\Components\Select::make('elapsed_time')
+                        ->native(false)
+                        ->options([
+                            'okay' => '<span class="text-success-400">Less than 90 days</span>' ,
+                            'warning' => '<span class="text-warning-400">90 to 180 days</span>',
+                            'danger' => '<span class="text-danger-400">More than 180 days</span>',
+                        ])
+                        ->allowHtml(),
+                ])
+                ->query(function (Builder $query, array $data) {
+                    return $query
+                        ->when(
+                            $data['elapsed_time'] == 'okay',
+                            fn(Builder $query, $date): Builder => $query->whereDate('submitted_at', '>=', now()->subDays(90))
+                        )
+                        ->when(
+                            $data['elapsed_time'] == 'warning',
+                            fn(Builder $query, $date): Builder => $query->whereBetween('submitted_at', [now()->subDays(180), now()->subDays(90)])
+                        )
+                        ->when(
+                            $data['elapsed_time'] == 'danger',
+                            fn(Builder $query, $date): Builder => $query->whereDate('submitted_at', '<', now()->subDays(180))
+                        );
+                }),
             ])
+            ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
