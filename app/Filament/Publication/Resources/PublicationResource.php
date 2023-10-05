@@ -1,24 +1,21 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Publication\Resources;
 
-use App\Filament\Resources\PublicationResource\Pages;
-use App\Filament\Resources\PublicationResource\RelationManagers;
-use App\Filament\Resources\PublicationResource\Widgets\PublicationStats;
+use App\Filament\Publication\Resources\PublicationResource\Widgets\PublicationStats;
+use App\Filament\Publication\Resources\PublicationResource\Pages;
+use App\Filament\Publication\Resources\PublicationResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
 use App\Models\Publication;
 use App\Models\Student;
-use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PublicationResource extends Resource
 {
@@ -37,8 +34,7 @@ class PublicationResource extends Resource
         foreach ($record->lecturers as $lecturer){
             $lecturerList[] = $lecturer->name;
         }
-        $newArray = array_combine(range(1, count($lecturerList)), array_values($lecturerList));
-        return $newArray;
+        return array_combine(range(1, count($lecturerList)), array_values($lecturerList));
     }
 
     public static function getGlobalSearchEloquentQuery(): Builder

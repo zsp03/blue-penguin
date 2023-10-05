@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Support\Facades\URL;
@@ -29,5 +30,20 @@ class AppServiceProvider extends ServiceProvider
         FilamentColor::register([
             'violet' => Color::hex('#6B33AF')
         ]);
+
+        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            $panelSwitch
+                ->modalWidth('lg')
+                ->slideOver()
+                ->labels([
+                    'publication' => 'Publikasi',
+                    'finalProject' => 'Tugas Akhir',
+                ])
+                ->icons([
+                    'admin' => 'heroicon-m-users',
+                    'publication' => 'heroicon-m-document-text',
+                    'finalProject' =>'phosphor-article-fill',
+                ]);
+        });
     }
 }

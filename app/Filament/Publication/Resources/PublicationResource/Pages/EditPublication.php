@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\FinalProjectResource\Pages;
+namespace App\Filament\Publication\Resources\PublicationResource\Pages;
 
-use App\Filament\Resources\FinalProjectResource;
+use App\Filament\Publication\Resources\PublicationResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditFinalProject extends EditRecord
+class EditPublication extends EditRecord
 {
-    protected static string $resource = FinalProjectResource::class;
+    protected static string $resource = PublicationResource::class;
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');

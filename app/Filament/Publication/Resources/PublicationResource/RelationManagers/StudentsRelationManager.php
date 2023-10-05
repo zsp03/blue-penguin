@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\PublicationResource\RelationManagers;
+namespace App\Filament\Publication\Resources\PublicationResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StudentsRelationManager extends RelationManager
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\FinalProjectResource\Pages;
+namespace App\Filament\FinalProject\Resources\FinalProjectResource\Pages;
 
-use App\Filament\Resources\FinalProjectResource;
-use Filament\Actions;
+use App\Filament\FinalProject\Resources\FinalProjectResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateFinalProject extends CreateRecord

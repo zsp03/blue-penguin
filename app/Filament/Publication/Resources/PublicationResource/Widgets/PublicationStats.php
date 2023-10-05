@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\PublicationResource\Widgets;
+namespace App\Filament\Publication\Resources\PublicationResource\Widgets;
 
 use App\Models\Publication;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;

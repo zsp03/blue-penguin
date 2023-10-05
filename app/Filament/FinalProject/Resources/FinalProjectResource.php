@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\FinalProject\Resources;
 
-use App\Filament\Resources\FinalProjectResource\Pages;
-use App\Filament\Resources\FinalProjectResource\RelationManagers;
+use App\Filament\FinalProject\Resources\FinalProjectResource\Pages;
+use App\Filament\FinalProject\Resources\FinalProjectResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
 use App\Filament\Tables\Columns\SupervisorsList;
 use App\Models\FinalProject;
@@ -21,7 +21,6 @@ use Illuminate\Support\Carbon;
 class FinalProjectResource extends Resource
 {
     protected static ?string $model = FinalProject::class;
-
     protected static ?string $recordTitleAttribute = 'title';
     protected static ?string $navigationGroup = 'Content';
 
@@ -159,6 +158,26 @@ class FinalProjectResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->deferLoading()
             ->filters([
+                Tables\Filters\SelectFilter::make('supervisorOne')
+                    ->label('Supervisor 1')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('lecturers', 'name', function (Builder $query) {
+                        return $query->where('role', 'supervisor 1');
+                    }),
+                Tables\Filters\SelectFilter::make('supervisorTwo')
+                    ->label('Supervisor 2')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('lecturers', 'name', function (Builder $query) {
+                        return $query->where('role', 'supervisor 2');
+                    }),
+                Tables\Filters\SelectFilter::make('evaluator')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('lecturers', 'name', function (Builder $query) {
+                        return $query->where('role', 'evaluator');
+                    }),
                 Tables\Filters\Filter::make('time')->form([
                     Forms\Components\Select::make('elapsed_time')
                         ->native(false)
@@ -184,6 +203,10 @@ class FinalProjectResource extends Resource
                             fn(Builder $query, $date): Builder => $query->whereDate('submitted_at', '<', now()->subDays(180))
                         );
                 }),
+            ])
+            ->filtersFormColumns([
+                'md' => 2,
+                'lg' => 4
             ])
             ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
             ->actions([

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\FinalProjectResource\Pages;
+namespace App\Filament\FinalProject\Resources\FinalProjectResource\Pages;
 
-use App\Filament\Resources\FinalProjectResource;
+use App\Actions\FilamentImport\Action\ImportAction;
+use App\Filament\FinalProject\Resources\FinalProjectResource;
 use App\Models\FinalProject;
 use App\Models\Lecturer;
 use App\Models\Student;
@@ -10,7 +11,6 @@ use Closure;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Carbon;
-use App\Actions\FilamentImport\Action\ImportAction;
 use Konnco\FilamentImport\Actions\ImportField;
 
 class ListFinalProjects extends ListRecords

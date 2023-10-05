@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\PublicationResource\Pages;
+namespace App\Filament\Publication\Resources\PublicationResource\Pages;
 
-use App\Filament\Resources\PublicationResource;
+use App\Filament\Publication\Resources\PublicationResource;
 use App\Models\Lecturer;
 use App\Models\Publication;
 use App\Models\Student;
 use Filament\Actions;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Konnco\FilamentImport\Actions\ImportAction;
 use Konnco\FilamentImport\Actions\ImportField;
