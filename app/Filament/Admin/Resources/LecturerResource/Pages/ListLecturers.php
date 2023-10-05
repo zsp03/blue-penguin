@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\LecturerResource\Pages;
+namespace App\Filament\Admin\Resources\LecturerResource\Pages;
 
-use App\Filament\Resources\LecturerResource;
-use Closure;
+use App\Filament\Admin\Resources\LecturerResource;
 use Coolsam\FilamentExcel\Actions\ImportAction;
 use Coolsam\FilamentExcel\Actions\ImportField;
 use Filament\Actions;

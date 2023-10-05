@@ -142,10 +142,10 @@ class PublicationResource extends Resource
                     ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->badge()
                     ->colors([
-                        'success' => 'jurnal',
-                        'gray' => 'prosiding',
-                        'violet' => 'pengabdian',
-                        'info' => 'penelitian',
+                        'success' => 'Jurnal',
+                        'gray' => 'Prosiding',
+                        'violet' => 'Pengabdian',
+                        'info' => 'Penelitian',
                     ])
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale')

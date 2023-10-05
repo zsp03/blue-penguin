@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\LecturerResource\Pages;
+namespace App\Filament\Admin\Resources\LecturerResource\Pages;
 
-use App\Filament\Resources\LecturerResource;
+use App\Filament\Admin\Resources\LecturerResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Storage;

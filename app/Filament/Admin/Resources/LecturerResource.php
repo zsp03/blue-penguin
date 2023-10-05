@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\LecturerResource\Pages;
-use App\Filament\Resources\LecturerResource\RelationManagers;
+use App\Filament\Admin\Resources\LecturerResource\Pages;
+use App\Filament\Admin\Resources\LecturerResource\RelationManagers;
 use App\Models\Lecturer;
 use App\Models\User;
-use Closure;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -14,9 +13,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 
 class LecturerResource extends Resource
@@ -119,7 +116,7 @@ class LecturerResource extends Resource
                     ->label('Nama')
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
                     ->weight(\Filament\Support\Enums\FontWeight::Medium)
-                    ->icon(fn (Lecturer $record) => $record->image_url ?: asset('assets/images/default_avatar.jpg'))
+                    ->icon(fn (Lecturer $record) => $record->image_url ?: \asset('assets/images/default_avatar.jpg'))
                     ->searchable()
                     ->copyable()
                     ->sortable(),

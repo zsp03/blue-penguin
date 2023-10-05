@@ -33,15 +33,19 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverResources(in: app_path('Filament/FinalProject/Resources'), for: 'App\\Filament\\FinalProject\\Resources')
             ->discoverResources(in: app_path('Filament/Publication/Resources'), for: 'App\\Filament\\Publication\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->discoverPages(in: app_path('Filament/FinalProject/Pages'), for: 'App\\Filament\\FinalProject\\Pages')
             ->discoverPages(in: app_path('Filament/Publication/Pages'), for: 'App\\Filament\\Publication\\Pages')
             ->pages([])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([])
+            ->navigationGroups([
+                'Content',
+                'Management'
+            ])
             ->plugins([
                 \pxlrbt\FilamentSpotlight\SpotlightPlugin::make(),
             ])
@@ -58,6 +62,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                // \App\Http\Middleware\Authenticate::class,
             ])
             ->viteTheme('resources/css/filament/admin/theme.css');
     }

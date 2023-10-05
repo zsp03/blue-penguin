@@ -23,8 +23,11 @@ class FinalProjectPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->brandLogo(asset('assets/images/logo.png'))
+            ->favicon(asset('favicon.ico'))
             ->id('finalProject')
             ->path('tugas-akhir')
+            ->login()
             ->colors([
                 'primary' => Color::Violet,
             ])
@@ -52,6 +55,8 @@ class FinalProjectPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+                // \App\Http\Middleware\Authenticate::class,
+            ])
+            ->viteTheme('resources/css/filament/admin/theme.css');
     }
 }

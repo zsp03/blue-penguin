@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\StudentResource\Pages;
+namespace App\Filament\Admin\Resources\StudentResource\Pages;
 
 use App\Actions\FilamentImport\Action\ImportAction;
-use App\Filament\Resources\StudentResource;
-use App\Models\Student;
+use App\Filament\Admin\Resources\StudentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Konnco\FilamentImport\Actions\ImportField;

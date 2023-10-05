@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\StudentResource\Pages;
+namespace App\Filament\Admin\Resources\StudentResource\Pages;
 
-use App\Filament\Resources\StudentResource;
-use Filament\Actions;
+use App\Filament\Admin\Resources\StudentResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateStudent extends CreateRecord

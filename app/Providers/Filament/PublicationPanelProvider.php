@@ -23,8 +23,11 @@ class PublicationPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->brandLogo(asset('assets/images/logo.png'))
+            ->favicon(asset('favicon.ico'))
             ->id('publication')
             ->path('pubs')
+            ->login()
             ->colors([
                 'primary' => Color::Sky,
             ])
@@ -52,6 +55,8 @@ class PublicationPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+                // \App\Http\Middleware\Authenticate::class,
+            ])
+            ->viteTheme('resources/css/filament/admin/theme.css');
     }
 }
