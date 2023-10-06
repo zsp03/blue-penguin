@@ -24,6 +24,18 @@ class FinalProjectResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
     protected static ?string $navigationGroup = 'Content';
 
+    public static function getEloquentQuery(): Builder
+    {
+        if (auth()->user()->role == '3') {
+            return parent::getEloquentQuery()->whereHas('lecturers', function (Builder $query) {
+                return $query
+                    ->where('nip', auth()->user()->lecturer->nip)
+                    ->whereIn('role', ['supervisor 1', 'supervisor 2']);
+            });
+        }
+       return parent::getEloquentQuery();
+    }
+
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
@@ -161,6 +173,7 @@ class FinalProjectResource extends Resource
                 Tables\Filters\SelectFilter::make('supervisorOne')
                     ->label('Supervisor 1')
                     ->searchable()
+                    ->hidden(auth()->user()->role == '3')
                     ->preload()
                     ->relationship('lecturers', 'name', function (Builder $query) {
                         return $query->where('role', 'supervisor 1');
@@ -168,6 +181,7 @@ class FinalProjectResource extends Resource
                 Tables\Filters\SelectFilter::make('supervisorTwo')
                     ->label('Supervisor 2')
                     ->searchable()
+                    ->hidden(auth()->user()->role == '3')
                     ->preload()
                     ->relationship('lecturers', 'name', function (Builder $query) {
                         return $query->where('role', 'supervisor 2');

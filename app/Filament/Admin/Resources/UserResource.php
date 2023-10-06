@@ -51,13 +51,24 @@ class UserResource extends Resource
                     ->password()
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                     ->dehydrated(fn ($state) => \filled($state))
-                    ->required(fn (string $context): bool => $context === 'create')
+                    ->required(fn (string $context): bool => $context === 'create'),
+                Forms\Components\Select::make('role')
+                    ->native(false)
+                    ->required()
+                    ->default('4')
+                    ->options([
+                        '0' => 'Superadmin',
+                        '1' => 'Admin 1',
+                        '3' => 'Dosen',
+                        '4' => 'Admin 2',
+                    ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),

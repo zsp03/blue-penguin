@@ -35,6 +35,7 @@ class ListFinalProjects extends ListRecords
                     ImportField::make('submitted_at'),
                     ImportField::make('status')
                 ])
+                ->hidden(auth()->user()->role == '3')
                 ->handleRecordCreation(function ($data) {
                     $keysToAdd = [
                         'title',
