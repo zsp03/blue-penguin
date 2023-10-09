@@ -1,4 +1,4 @@
-<div class="flex items-center">
+<div>
     <x-filament::link icon="heroicon-o-link" color="gray">
         Link
     </x-filament::link>

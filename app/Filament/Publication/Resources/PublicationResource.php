@@ -22,6 +22,10 @@ class PublicationResource extends Resource
     protected static ?string $model = Publication::class;
     protected static ?string $recordTitleAttribute = 'title';
     protected static ?string $navigationGroup = 'Content';
+    public static function getPluralLabel(): ?string
+    {
+        return __('Publications');
+    }
 
     public static function getGloballySearchableAttributes(): array
     {
@@ -50,15 +54,19 @@ class PublicationResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Section::make('Informasi Utama')
+                        Forms\Components\Section::make()
+                            ->heading(__('Main Information'))
                             ->schema([
                                 Forms\Components\TextInput::make('title')
+                                    ->translateLabel()
                                     ->required()
                                     ->columnSpan('full')
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('year')
+                                    ->translateLabel()
                                     ->numeric(),
                                 Forms\Components\Select::make('type')
+                                    ->translateLabel()
                                     ->required()
                                     ->native(false)
                                     ->selectablePlaceholder(false)
@@ -69,25 +77,29 @@ class PublicationResource extends Resource
                                         'pengabdian' => 'Pengabdian',
                                     ]),
                                 Forms\Components\TextInput::make('total_funds')
+                                    ->label(__('Total Funds'))
                                     ->prefix('Rp.')
                                     ->numeric()
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('fund_source')
+                                    ->label(__("Source Fund"))
                                     ->maxLength(255),
                             ])
                             ->collapsible()
                             ->columns(2),
                         Forms\Components\Section::make('Informasi Tambahan')
-                        ->schema([
+                            ->heading('Additional Information')
+                            ->schema([
                             Forms\Components\TextInput::make('link')
-                                ->label('Link Bukti')
+                                ->label(__('Source Link'))
                                 ->columnSpan('full')
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('citation')
+                                ->translateLabel()
                                 ->numeric()
                                 ->maxLength(255),
                             Forms\Components\Select::make('scale')
-                                ->label('Skala')
+                                ->label(__('Scale'))
                                 ->native(false)
                                 ->options([
                                     'Nasional' => 'Nasional',
@@ -101,11 +113,11 @@ class PublicationResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
-                            ->label('Created at')
+                            ->label(__('Created at'))
                             ->content(fn (Publication $record): ?string => $record->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
-                            ->label('Last modified at')
+                            ->label(__('Last modified at'))
                             ->content(fn (Publication $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -118,7 +130,7 @@ class PublicationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Judul')
+                    ->label(__('Title'))
                     ->limit(50)
                     ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
@@ -132,14 +144,16 @@ class PublicationResource extends Resource
                     })
                     ->searchable(),
                 AuthorsList::make('lecturers')
-                    ->label('Tim Dosen Peneliti'),
+                    ->label(__('Research Team')),
                 TextColumn::make('students.name')
-                    ->label('Mahasiswa Terlibat')
+                    ->label(__('Involved Student'))
                     ->listWithLineBreaks(),
                 Tables\Columns\TextColumn::make('year')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
+                    ->label(__('Type'))
                     ->badge()
                     ->colors([
                         'success' => 'Jurnal',
@@ -149,17 +163,19 @@ class PublicationResource extends Resource
                     ])
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_funds')
-                    ->label('Total Dana')
+                    ->label(__('Total Funds'))
                     ->prefix('Rp. ')
                     ->numeric(0,'.',','),
                 Tables\Columns\TextColumn::make('fund_source')
-                    ->label('Sumber Dana')
+                    ->label(__('Source Fund'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('citation'),
+                Tables\Columns\TextColumn::make('citation')
+                    ->translateLabel(),
                 Tables\Columns\ViewColumn::make('link')
-                    ->label('Bukti')
+                    ->label(__('Source Link'))
                     ->view('filament.tables.columns.click-here'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -173,19 +189,20 @@ class PublicationResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('lecturers')
                     ->native(false)
-                    ->label('Dosen Peneliti')
+                    ->label(__('Researcher'))
                     ->searchable()
                     ->multiple()
                     ->preload()
                     ->relationship('lecturers', 'name'),
                 Tables\Filters\SelectFilter::make('students')
                     ->native(false)
-                    ->label('Mahasiswa Terlibat')
+                    ->label(__('Involved Student'))
                     ->searchable()
                     ->multiple()
                     ->getOptionLabelFromRecordUsing(fn (Student $record) => "{$record->name} - {$record->nim}")
                     ->relationship('students', 'name'),
                 Tables\Filters\SelectFilter::make('type')
+                    ->translateLabel()
                     ->options([
                         'jurnal' => 'Jurnal',
                         'penelitian' => 'Penelitian',
@@ -197,12 +214,12 @@ class PublicationResource extends Resource
                 Tables\Filters\Filter::make('year')
                     ->form([
                         Forms\Components\TextInput::make('year_from')
-                            ->label('Dari')
+                            ->label(__('From'))
                             ->numeric()
                             ->placeholder(Publication::min('year'))
                             ->minValue(0),
                         Forms\Components\TextInput::make('year_until')
-                            ->label('Sampai')
+                            ->label(__('Until'))
                             ->numeric()
                             ->placeholder(now()->year)
                             ->minValue(0),

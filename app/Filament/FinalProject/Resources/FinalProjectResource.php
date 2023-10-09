@@ -83,11 +83,11 @@ class FinalProjectResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
-                            ->label('Created at')
+                            ->translateLabel()
                             ->content(fn (FinalProject $record): ?string => $record->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
-                            ->label('Last modified at')
+                            ->translateLabel()
                             ->content(fn (FinalProject $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -101,13 +101,16 @@ class FinalProjectResource extends Resource
             ->defaultSort('submitted_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('student.name')
+                    ->label(__('Student'))
                     ->searchable()
                     ->wrap()
                     ->description(fn (FinalProject $record): string => $record->student->nim),
                 Tables\Columns\TextColumn::make('title')
+                    ->translateLabel()
                     ->wrap()
                     ->searchable(),
                 SupervisorsList::make('supervisor')
+                    ->translateLabel()
                     ->state(function (FinalProject $record) {
                         $list = [];
                         foreach ($record->lecturers as $lecturer)
@@ -119,6 +122,7 @@ class FinalProjectResource extends Resource
                         return $list;
                     }),
                 AuthorsList::make('evaluator')
+                    ->translateLabel()
                     ->state(function (FinalProject $record) {
                         $list = [];
                         foreach ($record->lecturers as $lecturer)
@@ -130,6 +134,7 @@ class FinalProjectResource extends Resource
                         return $list;
                     }),
                 Tables\Columns\TextColumn::make('submitted_at')
+                    ->label(__("Proposed at"))
                     ->date('d F Y')
                     ->searchable(),
                 TextColumn::make('status')
@@ -161,17 +166,19 @@ class FinalProjectResource extends Resource
                     })
                     ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->deferLoading()
             ->filters([
                 Tables\Filters\SelectFilter::make('supervisorOne')
-                    ->label('Supervisor 1')
+                    ->label(fn():string => __('Supervisor').' 1')
                     ->searchable()
                     ->hidden(auth()->user()->role == '3')
                     ->preload()
@@ -179,7 +186,7 @@ class FinalProjectResource extends Resource
                         return $query->where('role', 'supervisor 1');
                     }),
                 Tables\Filters\SelectFilter::make('supervisorTwo')
-                    ->label('Supervisor 2')
+                    ->label(fn():string => __('Supervisor').' 2')
                     ->searchable()
                     ->hidden(auth()->user()->role == '3')
                     ->preload()
@@ -187,6 +194,7 @@ class FinalProjectResource extends Resource
                         return $query->where('role', 'supervisor 2');
                     }),
                 Tables\Filters\SelectFilter::make('evaluator')
+                    ->translateLabel()
                     ->searchable()
                     ->preload()
                     ->relationship('lecturers', 'name', function (Builder $query) {
@@ -194,11 +202,12 @@ class FinalProjectResource extends Resource
                     }),
                 Tables\Filters\Filter::make('time')->form([
                     Forms\Components\Select::make('elapsed_time')
+                        ->label(__('Elapsed Time'))
                         ->native(false)
                         ->options([
-                            'okay' => '<span class="font-medium text-success-600 dark:text-success-400">Less than 90 days</span>' ,
-                            'warning' => '<span class="font-medium text-warning-600 dark:text-warning-400">90 to 180 days</span>',
-                            'danger' => '<span class="font-medium text-danger-600 dark:text-danger-400">More than 180 days</span>',
+                            'okay' => '<span class="font-medium text-success-600 dark:text-success-400">{!!__("Less than 90 days")!!}</span>',
+                            'warning' => '<span class="font-medium text-warning-600 dark:text-warning-400">{{__("Between 90 to 180 days")}}</span>',
+                            'danger' => '<span class="font-medium text-danger-600 dark:text-danger-400">{{__("More than 180 days")}}</span>',
                         ])
                         ->allowHtml(),
                 ])

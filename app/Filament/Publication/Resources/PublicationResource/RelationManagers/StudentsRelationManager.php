@@ -5,10 +5,15 @@ namespace App\Filament\Publication\Resources\PublicationResource\RelationManager
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class StudentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'students';
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __("Students");
+    }
 
     public function table(Table $table): Table
     {

@@ -6,11 +6,16 @@ use App\Models\Lecturer;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class LecturerRelationManager extends RelationManager
 {
     protected static string $relationship = 'lecturers';
     protected static ?string $title = 'Authors';
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __("Research Team");
+    }
 
     public function table(Table $table): Table
     {
