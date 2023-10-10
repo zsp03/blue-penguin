@@ -35,7 +35,6 @@ class FinalProjectChart extends ChartWidget
     ];
     protected function getData(): array
     {
-        $this->filter = (string) now()->year;
         $data = Trend::model(FinalProject::class)
             ->dateColumn('submitted_at')
             ->between(
