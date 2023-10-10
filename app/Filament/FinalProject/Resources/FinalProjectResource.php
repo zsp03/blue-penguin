@@ -23,7 +23,10 @@ class FinalProjectResource extends Resource
     protected static ?string $model = FinalProject::class;
     protected static ?string $recordTitleAttribute = 'title';
     protected static ?string $navigationGroup = 'Content';
-
+    public static function getPluralLabel(): ?string
+    {
+        return __('Final Projects');
+    }
     public static function getEloquentQuery(): Builder
     {
         if (auth()->user()->role == '3') {
@@ -205,9 +208,9 @@ class FinalProjectResource extends Resource
                         ->label(__('Elapsed Time'))
                         ->native(false)
                         ->options([
-                            'okay' => '<span class="font-medium text-success-600 dark:text-success-400">{!!__("Less than 90 days")!!}</span>',
-                            'warning' => '<span class="font-medium text-warning-600 dark:text-warning-400">{{__("Between 90 to 180 days")}}</span>',
-                            'danger' => '<span class="font-medium text-danger-600 dark:text-danger-400">{{__("More than 180 days")}}</span>',
+                            'okay' => '<span class="font-medium text-success-600 dark:text-success-400">'.__("Less than 90 days").'</span>',
+                            'warning' => '<span class="font-medium text-warning-600 dark:text-warning-400">'.__("Between 90 to 180 days").'</span>',
+                            'danger' => '<span class="font-medium text-danger-600 dark:text-danger-400">'.__("More than 180 days").'</span>',
                         ])
                         ->allowHtml(),
                 ])
