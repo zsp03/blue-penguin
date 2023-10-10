@@ -8,8 +8,8 @@ use Illuminate\Support\Collection;
 
 class PublicationLineChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
-
+    protected static ?string $heading = 'Publication by Year';
+    protected static ?string $description = 'Shows all registered Publications by type each year';
     protected static ?array $options = [
         'elements' => [
             'line' => [
@@ -39,21 +39,41 @@ class PublicationLineChart extends ChartWidget
                 [
                     'label' => 'Jurnal',
                     'data' => $this->getPublicationData('jurnal'),
+                    'animation' => [
+                        'duration' => 300,
+                        'easing' => 'easeOutQubic',
+                        'loop' => false
+                    ]
                 ],
                 [
                     'label' => 'Prosiding',
                     'data' => $this->getPublicationData('prosiding'),
-                    'borderColor' => '#7D7C7C'
+                    'borderColor' => '#7D7C7C',
+                    'animation' => [
+                        'duration' => 400,
+                        'easing' => 'easeOutQubic',
+                        'loop' => false
+                    ]
                 ],
                 [
                     'label' => 'Penelitian',
                     'data' => $this->getPublicationData('penelitian'),
                     'borderColor' => '#6499E9',
+                    'animation' => [
+                        'duration' => 500,
+                        'easing' => 'easeOutQubic',
+                        'loop' => false
+                    ]
                 ],
                 [
                     'label' => 'Pengabdian',
                     'data' => $this->getPublicationData('pengabdian'),
-                    'borderColor' => '#9400FF'
+                    'borderColor' => '#9400FF',
+                    'animation' => [
+                        'duration' => 600,
+                        'easing' => 'easeOutQubic',
+                        'loop' => false
+                    ]
                 ],
             ],
             'labels' => ['2018', '2019', '2020', '2021', '2022', '2023']
