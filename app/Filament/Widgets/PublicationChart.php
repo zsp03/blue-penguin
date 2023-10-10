@@ -11,7 +11,6 @@ use Illuminate\Contracts\View\View;
 class PublicationChart extends ChartWidget
 {
     protected static ?string $heading = 'Jumlah Publikasi';
-    protected static ?string $description = 'Total publikasi yang telah terdaftar tiap jenis';
     public function getHeading(): string|Htmlable|null
     {
         return (__('Amount of Publications'));
