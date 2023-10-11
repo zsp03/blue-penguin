@@ -9,8 +9,6 @@ use Illuminate\Support\Collection;
 
 class PublicationLineChart extends ChartWidget
 {
-    protected static ?string $heading = 'Publication by Year';
-    protected static ?string $description = 'Shows all registered Publications by type each year';
     public function getHeading(): string|Htmlable|null
     {
         return (__('Publication by Year'));

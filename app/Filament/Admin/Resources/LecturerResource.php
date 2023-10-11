@@ -21,6 +21,10 @@ class LecturerResource extends Resource
     protected static ?string $model = Lecturer::class;
 
     protected static ?string $recordTitleAttribute = 'name';
+    public static function getPluralLabel(): ?string
+    {
+        return (__('Make Lecturer'));
+    }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
@@ -38,12 +42,14 @@ class LecturerResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Section::make('Data Dosen')
+                        Forms\Components\Section::make()
+                            ->heading(__('Lecturer Data'))
+                            ->translateLabel()
                             ->collapsible()
-                            ->description('Masukkan informasi Dosen disini')
+                            ->description(__('Enter the Lecturer information here'))
                             ->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->label('Nama')
+                                    ->translateLabel()
                                     ->required(),
                                 Forms\Components\TextInput::make('nip')
                                     ->label('NIP')
@@ -51,15 +57,19 @@ class LecturerResource extends Resource
                                     ->maxLength(255),
                             ])->columns(2),
 
-                        Forms\Components\Section::make('Foto Profil')
-                            ->description('Upload atau masukkan URL foto Dosen')
+                        Forms\Components\Section::make()
+                            ->heading(__('Profile Picture'))
+                            ->translateLabel()
+                            ->description(__('Upload or enter the URL of the Lecturer photo'))
                             ->collapsible()
                             ->schema([
                                 Forms\Components\Tabs::make()
                                     ->tabs([
                                         Forms\Components\Tabs\Tab::make('Upload')
+                                            ->translateLabel()
                                             ->schema([
                                                 Forms\Components\FileUpload::make('image')
+                                                    ->translateLabel()
                                                     ->label('')
                                                     ->image()
                                                     ->imageEditor()
@@ -79,10 +89,12 @@ class LecturerResource extends Resource
                                     ->columnSpan('full'),
                             ])
                             ->columns(1),
-                        Forms\Components\Section::make('User Terkait')
+                        Forms\Components\Section::make()
+                            ->heading(__('Related User'))
+                            ->translateLabel()
                             ->collapsed()
                             ->collapsible()
-                            ->description('Jika Dosen mempunyai akun, kaitkan nama akunnya disini')
+                            ->description(__('If lecturer have account, Link the account here'))
                             ->schema([
                                 Forms\Components\Select::make('user_id')
                                     ->label('')

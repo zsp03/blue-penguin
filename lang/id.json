@@ -35,8 +35,17 @@
     "Total publications that have been registered for each type": "Total publikasi yang telah terdaftar tiap jenis",
     "Shows all registered Publications by type each year": "Menampilkan semua publikasi yang terdaftar berdasarkan jenisnya setiap tahun",
     "Publication by Year": "Jumlah Publikasi Berdasarkan Tahun",
-    "Jurnal": "Journal",
+    "Journal": "Jurnal",
     "Proceeding": "Prosiding",
     "Research": "Penelitian",
-    "Service": "Pengabdian"
+    "Service": "Pengabdian",
+    "Lecturer Data": "Data Dosen",
+    "Enter the Lecturer information here": "Masukkan informasi Dosen disini",
+    "Profile Picture": "Foto Profil",
+    "Upload or enter the URL of the Lecturer photo": "Upload atau masukkan URL dari foto Dosen",
+    "image": "Foto",
+    "Upload": "Unggah",
+    "Name": "Nama",
+    "Related User": "Pengguna Terkait",
+    "If lecturer have account, Link the account here": "Jika Dosen mempunyai akun, kaitkan nama akunnya disini"
 }

@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\View;
 
 class PublicationChart extends ChartWidget
 {
-//    protected static ?string $heading = 'Amount of Publications';
+
     public function getHeading(): string|Htmlable|null
     {
         return (__('Amount of Publications'));
