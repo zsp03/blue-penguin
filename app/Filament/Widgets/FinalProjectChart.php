@@ -12,16 +12,14 @@ use Illuminate\Support\Carbon;
 
 class FinalProjectChart extends ChartWidget
 {
-    protected static ?string $heading = 'Jumlah Proposal';
     public function getHeading(): string|Htmlable|null
     {
         return (__('Amount of Proposal'));
     }
 
-    protected static ?string $description = 'Mahasiswa yang seminar proposal tiap bulan dalam satu tahun';
     public function getDescription(): string|Htmlable|null
     {
-        return (__('Students have proposal seminars every month of one year'));
+        return (__('Students that have proposal seminars every month of one year'));
     }
 
     protected int | string | array $columnSpan = 1;
@@ -57,7 +55,7 @@ class FinalProjectChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Final Projects',
+                    'label' => (__('Final Projects')),
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                     'fill' => 'start',
                     'animation' => [

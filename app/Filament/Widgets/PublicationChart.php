@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\View;
 
 class PublicationChart extends ChartWidget
 {
-    protected static ?string $heading = 'Jumlah Publikasi';
+//    protected static ?string $heading = 'Amount of Publications';
     public function getHeading(): string|Htmlable|null
     {
         return (__('Amount of Publications'));
@@ -55,7 +55,7 @@ class PublicationChart extends ChartWidget
                     ]
                 ],
             ],
-            'labels' => ['Jurnal', 'Prosiding', 'Penelitian', 'Pengabdian']
+            'labels' => [(__('Journal')), (__('Proceeding')), (__('Research')), (__('Service'))]
         ];
     }
 

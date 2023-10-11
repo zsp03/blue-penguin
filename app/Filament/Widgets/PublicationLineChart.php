@@ -4,12 +4,23 @@ namespace App\Filament\Widgets;
 
 use App\Models\Publication;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 
 class PublicationLineChart extends ChartWidget
 {
     protected static ?string $heading = 'Publication by Year';
     protected static ?string $description = 'Shows all registered Publications by type each year';
+    public function getHeading(): string|Htmlable|null
+    {
+        return (__('Publication by Year'));
+    }
+
+    public function getDescription(): string|Htmlable|null
+    {
+        return (__('Shows all registered Publications by type each year'));
+    }
+
     protected static ?array $options = [
         'elements' => [
             'line' => [
@@ -37,7 +48,7 @@ class PublicationLineChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Jurnal',
+                    'label' => (__('Journal')),
                     'data' => $this->getPublicationData('jurnal'),
                     'animation' => [
                         'duration' => 300,
@@ -46,7 +57,7 @@ class PublicationLineChart extends ChartWidget
                     ]
                 ],
                 [
-                    'label' => 'Prosiding',
+                    'label' => (__('Proceeding')),
                     'data' => $this->getPublicationData('prosiding'),
                     'borderColor' => '#7D7C7C',
                     'animation' => [
@@ -56,7 +67,7 @@ class PublicationLineChart extends ChartWidget
                     ]
                 ],
                 [
-                    'label' => 'Penelitian',
+                    'label' => (__('Research')),
                     'data' => $this->getPublicationData('penelitian'),
                     'borderColor' => '#6499E9',
                     'animation' => [
@@ -66,7 +77,7 @@ class PublicationLineChart extends ChartWidget
                     ]
                 ],
                 [
-                    'label' => 'Pengabdian',
+                    'label' => (__('Service')),
                     'data' => $this->getPublicationData('pengabdian'),
                     'borderColor' => '#9400FF',
                     'animation' => [

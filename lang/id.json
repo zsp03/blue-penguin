@@ -30,7 +30,13 @@
     "Between 90 to 180 days": "Antara 90 sampai 180 hari",
     "More than 180 days": "Lebih dari 180 hari",
     "Amount of Proposal": "Jumlah Proposal",
-    "Students have proposal seminar every month of one year" : "Mahasiswa yang seminar proposal tiap bulan dalam satu tahun",
+    "Students that have proposal seminars every month of one year" : "Mahasiswa yang telah seminar proposal tiap bulan dalam satu tahun",
     "Amount of Publications": "Jumlah Publikasi",
-    "Total publications that have been registered for each type": "Total publikasi yang telah terdaftar tiap jenis"
+    "Total publications that have been registered for each type": "Total publikasi yang telah terdaftar tiap jenis",
+    "Shows all registered Publications by type each year": "Menampilkan semua publikasi yang terdaftar berdasarkan jenisnya setiap tahun",
+    "Publication by Year": "Jumlah Publikasi Berdasarkan Tahun",
+    "Jurnal": "Journal",
+    "Proceeding": "Prosiding",
+    "Research": "Penelitian",
+    "Service": "Pengabdian"
 }
