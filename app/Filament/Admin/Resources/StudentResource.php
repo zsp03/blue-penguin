@@ -25,15 +25,21 @@ class StudentResource extends Resource
             '' => $record->nim,
         ];
     }
+    public static function getPluralLabel(): ?string
+    {
+        return (__('Student'));
+    }
 
     protected static ?string $navigationIcon = 'phosphor-student-fill';
     protected static ?string $navigationGroup = 'Management';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->translateLabel()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nim')
@@ -54,6 +60,7 @@ class StudentResource extends Resource
             ->columns([
                 Tables\Columns\Layout\Stack::make([
                     Tables\Columns\TextColumn::make('name')
+                        ->translateLabel()
                         ->size(Tables\Columns\TextColumn\TextColumnSize::Large)
                         ->weight(FontWeight::Bold)
                         ->sortable()

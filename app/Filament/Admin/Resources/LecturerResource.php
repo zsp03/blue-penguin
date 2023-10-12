@@ -23,7 +23,7 @@ class LecturerResource extends Resource
     protected static ?string $recordTitleAttribute = 'name';
     public static function getPluralLabel(): ?string
     {
-        return (__('Make Lecturer'));
+        return (__('Lecturer'));
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
@@ -107,12 +107,14 @@ class LecturerResource extends Resource
                     ->columnSpan(['lg' => fn (?Lecturer $record) => $record === null ? 3 : 2]),
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Placeholder::make('created_at')
-                            ->label('Created at')
+                        Forms\Components\Placeholder::make('Created at')
+//                            ->label(__('Created at'))
+                            ->translateLabel()
                             ->content(fn (Lecturer $record): ?string => $record->created_at?->diffForHumans()),
 
-                        Forms\Components\Placeholder::make('updated_at')
-                            ->label('Last modified at')
+                        Forms\Components\Placeholder::make('Updated at')
+//                            ->label(__('Last modified at'))
+                            ->translateLabel()
                             ->content(fn (Lecturer $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -138,10 +140,12 @@ class LecturerResource extends Resource
                     ->copyable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -71,10 +71,10 @@ class PublicationResource extends Resource
                                     ->native(false)
                                     ->selectablePlaceholder(false)
                                     ->options([
-                                        'jurnal' => 'Jurnal',
-                                        'prosiding' => 'Prosiding',
-                                        'penelitian' => 'Penelitian',
-                                        'pengabdian' => 'Pengabdian',
+                                        'jurnal' => (__('Journal')),
+                                        'prosiding' => (__('Proceeding')),
+                                        'penelitian' => (__('Research')),
+                                        'pengabdian' => (__('Service')),
                                     ]),
                                 Forms\Components\TextInput::make('total_funds')
                                     ->label(__('Total Funds'))
@@ -87,8 +87,8 @@ class PublicationResource extends Resource
                             ])
                             ->collapsible()
                             ->columns(2),
-                        Forms\Components\Section::make('Informasi Tambahan')
-                            ->heading('Additional Information')
+                        Forms\Components\Section::make('Additional Information')
+                            ->heading(__('Additional Information'))
                             ->schema([
                             Forms\Components\TextInput::make('link')
                                 ->label(__('Source Link'))

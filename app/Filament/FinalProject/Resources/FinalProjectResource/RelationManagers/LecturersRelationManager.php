@@ -8,10 +8,17 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class LecturersRelationManager extends RelationManager
 {
     protected static string $relationship = 'lecturers';
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return (__('Lecturers'));
+    }
 
     public function table(Table $table): Table
     {
@@ -20,8 +27,10 @@ class LecturersRelationManager extends RelationManager
             ->defaultSort('role', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
                     ->icon(fn (Lecturer $record) => $record->image_url ?: asset('assets/images/default_avatar.jpg')),
                 Tables\Columns\TextColumn::make('role')
+                    ->translateLabel()
                     ->badge()
                     ->colors([
                         'info' => 'supervisor 1',
@@ -37,6 +46,7 @@ class LecturersRelationManager extends RelationManager
                 AttachAction::make()->form(fn (AttachAction $action): array => [
                     $action->getRecordSelect(),
                     Forms\Components\Select::make('role')
+                        ->translateLabel()
                         ->native(false)
                         ->options([
                             'supervisor 1' => 'Supervisor 1',
@@ -58,6 +68,7 @@ class LecturersRelationManager extends RelationManager
                 AttachAction::make()->form(fn (AttachAction $action): array => [
                     $action->getRecordSelect(),
                     Forms\Components\Select::make('role')
+                        ->translateLabel()
                         ->native(false)
                         ->options([
                             'supervisor 1' => 'Supervisor 1',

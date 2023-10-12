@@ -25,7 +25,7 @@ class FinalProjectResource extends Resource
     protected static ?string $navigationGroup = 'Content';
     public static function getPluralLabel(): ?string
     {
-        return __('Final Projects');
+        return __('Final Project');
     }
     public static function getEloquentQuery(): Builder
     {
@@ -65,20 +65,23 @@ class FinalProjectResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Select::make('student_id')
+                            ->label(__('Student'))
                             ->native(false)
                             ->relationship('student')
                             ->getOptionLabelFromRecordUsing(fn (Student $record) => "{$record->name} - {$record->nim}")
                             ->searchable(['name', 'nim']),
                         Forms\Components\TextInput::make('title')
+                            ->translateLabel()
                             ->required()
                             ->maxLength(255),
                         Forms\Components\DatePicker::make('submitted_at')
+                            ->translateLabel()
                             ->required(),
                         Forms\Components\Select::make('status')
                             ->options([
-                                "Ongoing" => "Ongoing",
-                                "Finalizing" => "Finalizing",
-                                "Done" => 'Done',
+                                "Ongoing" => (__("Ongoing")),
+                                "Finalizing" => (__("Finalizing")),
+                                "Done" => (__('Done')),
                             ])
                     ])
                     ->columns(2)
@@ -137,15 +140,17 @@ class FinalProjectResource extends Resource
                         return $list;
                     }),
                 Tables\Columns\TextColumn::make('submitted_at')
+                    ->translateLabel()
                     ->label(__("Proposed at"))
                     ->date('d F Y')
                     ->searchable(),
                 TextColumn::make('status')
+                    ->translateLabel()
                     ->badge()
                     ->colors([
-                        'gray' => 'Ongoing',
-                        'info' => 'Finalizing',
-                        'success' => 'Done'
+                        'gray' => (__('Ongoing')),
+                        'info' => (__('Finalizing')),
+                        'success' => (__('Done'))
                     ]),
                 TextColumn::make('time_elapsed')
                     ->label('')
@@ -182,6 +187,7 @@ class FinalProjectResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('supervisorOne')
                     ->label(fn():string => __('Supervisor').' 1')
+                    ->translateLabel()
                     ->searchable()
                     ->hidden(auth()->user()->role == '3')
                     ->preload()

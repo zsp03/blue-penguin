@@ -1,5 +1,5 @@
 {
-    "Final Projects" : "Tugas Akhir",
+    "Final Project" : "Tugas Akhir",
     "Publications" : "Publikasi",
     "Involved Student" : "Mahasiswa Terlibat",
     "Research Team" : "Tim Dosen Peneliti",
@@ -47,5 +47,17 @@
     "Upload": "Unggah",
     "Name": "Nama",
     "Related User": "Pengguna Terkait",
-    "If lecturer have account, Link the account here": "Jika Dosen mempunyai akun, kaitkan nama akunnya disini"
+    "If lecturer have account, Link the account here": "Jika Dosen mempunyai akun, kaitkan nama akunnya disini",
+    "Make Lecturer": "Buat Dosen",
+    "Make Student": "Buat Mahasiswa",
+    "Password": "Kata Kunci",
+    "Updated at": "Diubah pada",
+    "Role": "Peran",
+    "Submitted at": "Dikirimkan pada",
+    "Make Final Project": "Buat Tugas Akhir",
+    "Make Publication": "Buat Publikasi",
+    "Ongoing": "Lagi berjalan",
+    "Finalizing": "Finalisasi",
+    "Done": "Selesai",
+    "Days": "Hari"
 }
