@@ -22,7 +22,7 @@ class PublicationLineChart extends ChartWidget
     protected static ?array $options = [
         'elements' => [
             'line' => [
-                'borderWidth' => 4
+                'borderWidth' => 3
             ]
         ]
     ];
@@ -48,6 +48,10 @@ class PublicationLineChart extends ChartWidget
                 [
                     'label' => (__('Journal')),
                     'data' => $this->getPublicationData('jurnal'),
+                    'pointStyle' => 'circle',
+                    'pointRadius' => 5,
+                    'pointHoverRadius' => 8,
+                    'borderColor' => '#10B981A5',
                     'animation' => [
                         'duration' => 300,
                         'easing' => 'easeOutQubic',
@@ -57,7 +61,11 @@ class PublicationLineChart extends ChartWidget
                 [
                     'label' => (__('Proceeding')),
                     'data' => $this->getPublicationData('prosiding'),
-                    'borderColor' => '#7D7C7C',
+                    'pointStyle' => 'circle',
+                    'pointRadius' => 5,
+                    'pointHoverRadius' => 8,
+                    'pointBackgroundColor' => '#7D7C7C',
+                    'borderColor' => '#7D7C7CAA',
                     'animation' => [
                         'duration' => 400,
                         'easing' => 'easeOutQubic',
@@ -67,7 +75,11 @@ class PublicationLineChart extends ChartWidget
                 [
                     'label' => (__('Research')),
                     'data' => $this->getPublicationData('penelitian'),
-                    'borderColor' => '#6499E9',
+                    'pointStyle' => 'circle',
+                    'pointRadius' => 5,
+                    'pointHoverRadius' => 8,
+                    'pointBackgroundColor' => '#6499E9',
+                    'borderColor' => '#6499E9AA',
                     'animation' => [
                         'duration' => 500,
                         'easing' => 'easeOutQubic',
@@ -77,7 +89,11 @@ class PublicationLineChart extends ChartWidget
                 [
                     'label' => (__('Service')),
                     'data' => $this->getPublicationData('pengabdian'),
-                    'borderColor' => '#9400FF',
+                    'pointStyle' => 'circle',
+                    'pointRadius' => 5,
+                    'pointHoverRadius' => 8,
+                    'pointBackgroundColor' => '#9400FF',
+                    'borderColor' => '#9400FFAA',
                     'animation' => [
                         'duration' => 600,
                         'easing' => 'easeOutQubic',
