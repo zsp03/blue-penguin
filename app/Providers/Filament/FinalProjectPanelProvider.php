@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\FinalProject\Resources\FinalProjectResource\Widgets\FinalProjectStudentChart;
 use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -42,6 +43,7 @@ class FinalProjectPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                FinalProjectStudentChart::class,
             ])
             ->sidebarCollapsibleOnDesktop()
             ->plugins([

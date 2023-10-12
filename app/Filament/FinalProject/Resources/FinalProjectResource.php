@@ -148,10 +148,11 @@ class FinalProjectResource extends Resource
                     ->translateLabel()
                     ->badge()
                     ->colors([
-                        'gray' => (__('Ongoing')),
-                        'info' => (__('Finalizing')),
-                        'success' => (__('Done'))
-                    ]),
+                        'gray' => 'Ongoing',
+                        'info' => 'Finalizing',
+                        'success' => 'Done'
+                    ])
+                    ->formatStateUsing(fn (string $state): string => __($state)),
                 TextColumn::make('time_elapsed')
                     ->label('')
                     ->state(function (FinalProject $record) {
@@ -242,6 +243,7 @@ class FinalProjectResource extends Resource
             ])
             ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
