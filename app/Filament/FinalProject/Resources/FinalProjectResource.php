@@ -8,8 +8,10 @@ use App\Filament\Tables\Columns\AuthorsList;
 use App\Filament\Tables\Columns\SupervisorsList;
 use App\Models\FinalProject;
 use App\Models\Student;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -29,10 +31,11 @@ class FinalProjectResource extends Resource
     }
     public static function getEloquentQuery(): Builder
     {
-        if (auth()->user()->role == '3') {
+        $panelId = Filament::getCurrentPanel()->getId();
+        if ($panelId == 'finalProject') {
             return parent::getEloquentQuery()->whereHas('lecturers', function (Builder $query) {
                 return $query
-                    ->where('nip', auth()->user()->lecturer->nip)
+                    ->where('nip', auth()->user()->lecturer?->nip)
                     ->whereIn('role', ['supervisor 1', 'supervisor 2']);
             });
         }
