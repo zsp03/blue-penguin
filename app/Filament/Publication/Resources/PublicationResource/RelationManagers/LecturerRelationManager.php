@@ -14,7 +14,7 @@ class LecturerRelationManager extends RelationManager
     protected static ?string $title = 'Authors';
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
-        return __("Research Team");
+        return (__("Research Team"));
     }
 
     public function table(Table $table): Table

@@ -102,8 +102,8 @@ class PublicationResource extends Resource
                                 ->label(__('Scale'))
                                 ->native(false)
                                 ->options([
-                                    'Nasional' => 'Nasional',
-                                    'Internasional' => 'Internasional',
+                                    'Nasional' => (__('National')),
+                                    'Internasional' => (__('International')),
                                 ]),
                         ])
                             ->columns(2)
@@ -178,10 +178,12 @@ class PublicationResource extends Resource
                     ->label(__('Source Link'))
                     ->view('filament.tables.columns.click-here'),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -11,10 +11,10 @@ class PublicationStats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Jurnal', Publication::where('type' , '=', 'jurnal')->count()),
-            Stat::make('Prosiding', Publication::where('type', '=', 'prosiding')->count()),
-            Stat::make('Pengabdian', Publication::where('type', '=', 'pengabdian')->count()),
-            Stat::make('Penelitian', Publication::where('type', '=', 'penelitian')->count())
+            Stat::make((__('Journal')), Publication::where('type' , '=', 'jurnal')->count()),
+            Stat::make((__('Proceeding')), Publication::where('type', '=', 'prosiding')->count()),
+            Stat::make((__('Service')), Publication::where('type', '=', 'pengabdian')->count()),
+            Stat::make((__('Research')), Publication::where('type', '=', 'penelitian')->count())
         ];
     }
 }
