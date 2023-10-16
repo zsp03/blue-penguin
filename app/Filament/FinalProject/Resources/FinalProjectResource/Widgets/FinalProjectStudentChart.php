@@ -22,7 +22,7 @@ class FinalProjectStudentChart extends ChartWidget
                     ->where('nip', auth()->user()->lecturer?->nip)
                     ->whereIn('role', ['supervisor 1', 'supervisor 2']);
                 })
-            ->with('student:id,nim')
+            ->with('student:id,name')
             ->select('submitted_at', 'student_id')
             ->orderBy('submitted_at')
             ->get();
@@ -38,7 +38,7 @@ class FinalProjectStudentChart extends ChartWidget
 
             return [
                 'days' => $diffDays,
-                'nim' => $result->student->nim,
+                'name' => $result->student->name,
                 'color' => $color
             ];
         });
@@ -47,7 +47,7 @@ class FinalProjectStudentChart extends ChartWidget
     protected function getData(): array
     {
         $data = $this->getStudentFinalProject()->pluck('days');
-        $labels = $this->getStudentFinalProject()->pluck('nim');
+        $labels = $this->getStudentFinalProject()->pluck('name');
         $colors = $this->getStudentFinalProject()->pluck('color');
         return [
             'datasets' => [
@@ -71,6 +71,7 @@ class FinalProjectStudentChart extends ChartWidget
     {
         return RawJs::make(<<<JS
             {
+                indexAxis : 'y',
                 plugins: {
                     legend: {
                         display: false,
@@ -86,7 +87,7 @@ class FinalProjectStudentChart extends ChartWidget
                     },
                 },
                 scales: {
-                    y: {
+                    x: {
                         ticks: {
                             callback: (value) => value + ' days',
                         },
