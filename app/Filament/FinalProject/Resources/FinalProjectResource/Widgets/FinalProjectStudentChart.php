@@ -3,6 +3,7 @@
 namespace App\Filament\FinalProject\Resources\FinalProjectResource\Widgets;
 
 use App\Models\FinalProject;
+use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -11,10 +12,6 @@ class FinalProjectStudentChart extends ChartWidget
 {
     protected static ?string $heading = 'Your Students Status';
     protected static ?string $description = 'Your students that has not yet complete their Final Project';
-
-    protected static ?array $options = [
-        'indexAxis' => 'y',
-    ];
 
     protected int | string | array $columnSpan = 'full';
 
@@ -27,6 +24,7 @@ class FinalProjectStudentChart extends ChartWidget
                 })
             ->with('student:id,nim')
             ->select('submitted_at', 'student_id')
+            ->orderBy('submitted_at')
             ->get();
 
         return $projects->map(function ($result) {
@@ -54,7 +52,7 @@ class FinalProjectStudentChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Your Student Status',
+                    'label' => 'Days after proposal',
                     'data' => $data,
                     'borderColor' => $colors,
                     'backgroundColor' => $colors,
@@ -67,5 +65,34 @@ class FinalProjectStudentChart extends ChartWidget
     protected function getType(): string
     {
         return 'bar';
+    }
+
+    protected function getOptions(): RawJs
+    {
+        return RawJs::make(<<<JS
+            {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(item) {
+                                let dataLabel = item.dataset.label + ': ';
+                                let value = item.formattedValue;
+                                return dataLabel + value + ' days';
+                            }
+                        },
+                    },
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: (value) => value + ' days',
+                        },
+                    },
+                },
+            }
+        JS);
     }
 }
