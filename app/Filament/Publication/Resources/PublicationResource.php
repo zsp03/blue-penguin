@@ -152,7 +152,6 @@ class PublicationResource extends Resource
                     ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->label(__('Type'))
                     ->badge()
                     ->colors([
@@ -161,7 +160,8 @@ class PublicationResource extends Resource
                         'violet' => 'Pengabdian',
                         'info' => 'Penelitian',
                     ])
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(fn (string $state): string => (__(ucfirst($state)))),
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
                     ->searchable(),
@@ -206,10 +206,10 @@ class PublicationResource extends Resource
                 Tables\Filters\SelectFilter::make('type')
                     ->translateLabel()
                     ->options([
-                        'jurnal' => 'Jurnal',
-                        'penelitian' => 'Penelitian',
-                        'prosiding' => 'Prosiding',
-                        'pengabdian' => 'Pengabdian',
+                        'jurnal' => (__('Journal')),
+                        'penelitian' => (__('Research')),
+                        'prosiding' => (__('Proceeding')),
+                        'pengabdian' => (__('Service')),
                     ])
                     ->multiple()
                     ->native(false),

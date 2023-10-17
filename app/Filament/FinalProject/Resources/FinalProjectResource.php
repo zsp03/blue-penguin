@@ -164,7 +164,8 @@ class FinalProjectResource extends Resource
                         } else {
                             $start_date = Carbon::parse($record->submitted_at);
                             $elapsed_day = $start_date->diffInDays(now());
-                            return "$elapsed_day" . " Hari";
+                            $daysTranslation = (__('Days'));
+                            return "$elapsed_day $daysTranslation";
                         }
                     })
                     ->color(function (FinalProject $record) {

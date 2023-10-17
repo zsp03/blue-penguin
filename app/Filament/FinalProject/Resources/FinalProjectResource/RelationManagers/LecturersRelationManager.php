@@ -37,7 +37,7 @@ class LecturersRelationManager extends RelationManager
                         'success' => 'supervisor 2',
                         'violet' => 'evaluator'
                     ])
-                    ->formatStateUsing(fn (string $state): string => ucfirst($state))
+                    ->formatStateUsing(fn (string $state): string => (__(ucfirst($state))))
             ])
             ->filters([
                 //
@@ -49,9 +49,9 @@ class LecturersRelationManager extends RelationManager
                         ->translateLabel()
                         ->native(false)
                         ->options([
-                            'supervisor 1' => 'Supervisor 1',
-                            'supervisor 2' => 'Supervisor 2',
-                            'evaluator' => 'Evaluator',
+                            'supervisor 1' => (__('Supervisor 1')),
+                            'supervisor 2' => (__('Supervisor 2')),
+                            'evaluator' => (__('Evaluator'))
                         ])
                         ->required(),
                 ])
