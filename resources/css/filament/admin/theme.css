@@ -19,7 +19,7 @@
 }
 
 .fi-simple-header .fi-logo{
-    @apply w-20 h-20
+    @apply w-20 h-20 !important
 }
 
 .fi-badge > span > span {

@@ -27,6 +27,7 @@ class PublicationPanelProvider extends PanelProvider
     {
         return $panel
             ->brandLogo(asset('assets/images/logo.png'))
+            ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.ico'))
             ->id('publication')
             ->path('pubs')

@@ -43,7 +43,8 @@ class AppServiceProvider extends ServiceProvider
                     'admin' => 'heroicon-m-users',
                     'publication' => 'heroicon-m-document-text',
                     'finalProject' =>'phosphor-article-fill',
-                ]);
+                ])
+                ->excludes(fn () => (auth()->user()->role !== '0') ? ['admin'] : []);
         });
     }
 }

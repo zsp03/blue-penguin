@@ -22,33 +22,45 @@ class FinalProjectStudentChart extends ChartWidget
                     ->where('nip', auth()->user()->lecturer?->nip)
                     ->whereIn('role', ['supervisor 1', 'supervisor 2']);
                 })
+            ->with('lecturers')
             ->with('student:id,name')
-            ->select('submitted_at', 'student_id')
             ->orderBy('submitted_at')
             ->get();
-
         return $projects->map(function ($result) {
+            $lecturerRole = $result->lecturers->first(function ($lecturer) {
+                return $lecturer->nip === auth()->user()->lecturer?->nip;
+            })?->pivot->role;
+
             $diffDays = now()->diffInDays(Carbon::createFromFormat('Y-m-d',$result->submitted_at));
 
-            if ($diffDays >= 180) {
-                $color = '#FF0000D8';
-            } elseif ($diffDays >= 90) {
-                $color = '#facc15d8';
-            } else $color = '#00FF2FD8';
+            $colorLookup = [
+                'supervisor 1' => ['#FF0000D8', '#facc15d8', '#00FF2FD8'],
+                'supervisor 2' => ['#FF0000C2', '#facc15c2', '#00FF2FC2'],
+            ];
+
+            if ($diffDays >= 540) {
+                $color = $colorLookup[$lecturerRole][0];
+            } elseif ($diffDays >= 180) {
+                $color = $colorLookup[$lecturerRole][1];
+            } else {
+                $color = $colorLookup[$lecturerRole][2];
+            }
 
             return [
                 'days' => $diffDays,
                 'name' => $result->student->name,
-                'color' => $color
+                'color' => $color,
             ];
         });
     }
 
     protected function getData(): array
     {
+//        dd($this->getStudentFinalProject());
         $data = $this->getStudentFinalProject()->pluck('days');
         $labels = $this->getStudentFinalProject()->pluck('name');
         $colors = $this->getStudentFinalProject()->pluck('color');
+
         return [
             'datasets' => [
                 [
