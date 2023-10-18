@@ -153,6 +153,7 @@ class PublicationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('Type'))
+                    ->formatStateUsing(fn (string $state): string => (__(ucfirst($state))))
                     ->badge()
                     ->colors([
                         'success' => 'jurnal',
@@ -160,8 +161,7 @@ class PublicationResource extends Resource
                         'violet' => 'pengabdian',
                         'info' => 'penelitian',
                     ])
-                    ->searchable()
-                    ->formatStateUsing(fn (string $state): string => (__(ucfirst($state)))),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
                     ->searchable(),
