@@ -162,14 +162,7 @@ class PublicationResource extends Resource
                             'pengabdian' => 'violet',
                         };
                     })
-                    ->formatStateUsing(function (string $state): string {
-                        return match ($state) {
-                            'jurnal' => (__('Journal')),
-                            'penelitian' => (__('Research')),
-                            'prosiding' => (__('Proceeding')),
-                            'pengabdian' => (__('Service')),
-                        };
-                    })
+                    ->formatStateUsing(fn (string $state): string => (__(ucfirst($state))))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
