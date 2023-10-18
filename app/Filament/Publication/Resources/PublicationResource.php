@@ -171,6 +171,11 @@ class PublicationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
+                    ->formatStateUsing(fn (string $state): string => match($state){
+                        'Nasional' => (__('National')),
+                        'Internasional' => (__('International')),
+                        default => ''
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_funds')
                     ->label(__('Total Funds'))

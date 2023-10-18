@@ -128,7 +128,7 @@ class LecturerResource extends Resource
             ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nama')
+                    ->translateLabel()
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Medium)
                     ->weight(\Filament\Support\Enums\FontWeight::Medium)
                     ->icon(fn (Lecturer $record) => $record->image_url ?: \asset('assets/images/default_avatar.jpg'))
