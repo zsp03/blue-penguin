@@ -48,7 +48,23 @@ class ListPublications extends ListRecords
 
                     $lecturerIds = function () use ($data) {
                         $explodedLecturersData = explode(', ', $data['authors']);
-                        $lecturers = Lecturer::whereIn('nip', $explodedLecturersData)->get();
+                        $lecturersData = array();
+                        foreach ($explodedLecturersData as $lecturerData) {
+                            $lecturer = Lecturer::firstOrCreate(
+                                [
+                                    'nip' => $lecturerData
+                                ],
+                                [
+                                    'name' => $lecturerData,
+                                    'nip' => 'DL' . crc32(uniqid())
+                                ]
+                            );
+
+                            $lecturersData[] = $lecturer->nip;
+                        }
+
+                        $lecturers = Lecturer::whereIn('nip', $lecturersData)->get();
+
                         return $lecturers->pluck('id')->toArray();
                     };
 

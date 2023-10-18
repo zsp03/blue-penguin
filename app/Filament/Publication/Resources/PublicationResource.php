@@ -155,10 +155,10 @@ class PublicationResource extends Resource
                     ->label(__('Type'))
                     ->badge()
                     ->colors([
-                        'success' => 'Jurnal',
-                        'gray' => 'Prosiding',
-                        'violet' => 'Pengabdian',
-                        'info' => 'Penelitian',
+                        'success' => 'jurnal',
+                        'gray' => 'prosiding',
+                        'violet' => 'pengabdian',
+                        'info' => 'penelitian',
                     ])
                     ->searchable()
                     ->formatStateUsing(fn (string $state): string => (__(ucfirst($state)))),
