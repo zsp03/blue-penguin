@@ -153,14 +153,23 @@ class PublicationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('Type'))
-                    ->formatStateUsing(fn (string $state): string => (__(ucfirst($state))))
                     ->badge()
-                    ->colors([
-                        'success' => 'jurnal',
-                        'gray' => 'prosiding',
-                        'violet' => 'pengabdian',
-                        'info' => 'penelitian',
-                    ])
+                    ->color(function (string $state): string {
+                        return match ($state) {
+                            'jurnal' => 'success',
+                            'penelitian' => 'info',
+                            'prosiding' => 'gray',
+                            'pengabdian' => 'violet',
+                        };
+                    })
+                    ->formatStateUsing(function (string $state): string {
+                        return match ($state) {
+                            'jurnal' => (__('Journal')),
+                            'penelitian' => (__('Research')),
+                            'prosiding' => (__('Proceeding')),
+                            'pengabdian' => (__('Service')),
+                        };
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
