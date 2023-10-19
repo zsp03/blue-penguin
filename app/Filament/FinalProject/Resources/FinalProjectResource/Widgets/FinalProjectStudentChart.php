@@ -5,13 +5,20 @@ namespace App\Filament\FinalProject\Resources\FinalProjectResource\Widgets;
 use App\Models\FinalProject;
 use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
 class FinalProjectStudentChart extends ChartWidget
 {
-    protected static ?string $heading = 'Your Students Status';
-    protected static ?string $description = 'Your students that has not yet complete their Final Project';
+    public function getHeading(): string|Htmlable|null
+    {
+        return (__('Your Students Status'));
+    }
+    public function getDescription(): string|Htmlable|null
+    {
+        return (__('Your students that has not yet complete their Final Project'));
+    }
 
     protected int | string | array $columnSpan = 'full';
 
@@ -30,7 +37,6 @@ class FinalProjectStudentChart extends ChartWidget
             $lecturerRole = $result->lecturers->first(function ($lecturer) {
                 return $lecturer->nip === auth()->user()->lecturer?->nip;
             })?->pivot->role;
-
             $diffDays = now()->diffInDays(Carbon::createFromFormat('Y-m-d',$result->submitted_at));
 
             $colorLookup = [

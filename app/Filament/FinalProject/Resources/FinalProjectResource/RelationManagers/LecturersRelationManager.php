@@ -55,6 +55,8 @@ class LecturersRelationManager extends RelationManager
                         ])
                         ->required(),
                 ])
+                    ->modalHeading(__("Attach Lecturer"))
+
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),

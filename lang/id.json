@@ -65,5 +65,10 @@
     "Evaluator 1":  "Penguji 1",
     "Evaluator 2": "Penguji 2",
     "National": "Nasional",
-    "International": "Internasional"
+    "International": "Internasional",
+    "Your Students Status": "Status dari Mahasiswa",
+    "Your students that has not yet complete their Final Project": "Mahasiswa yang Belum Menyelesaikan Tugas Akhirnya",
+    "Attach Lecturer": "Lampirkan Dosen",
+    "Attach Student": "Lampirkan Mahasiswa",
+    "filament-import::actions.skip_header": "Lewatkan Header"
 }

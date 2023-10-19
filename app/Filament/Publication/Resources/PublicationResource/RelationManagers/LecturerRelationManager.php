@@ -30,6 +30,7 @@ class LecturerRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
+                ->modalHeading(__('Attach Lecturer'))
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),

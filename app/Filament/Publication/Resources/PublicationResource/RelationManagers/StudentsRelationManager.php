@@ -27,7 +27,8 @@ class StudentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make(),
+                Tables\Actions\AttachAction::make()
+                ->modalHeading(__('Attach Student')),
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),
