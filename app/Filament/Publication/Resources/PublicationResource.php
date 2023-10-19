@@ -93,7 +93,7 @@ class PublicationResource extends Resource
                             Forms\Components\TextInput::make('link')
                                 ->label(__('Source Link'))
                                 ->columnSpan('full')
-                                ->maxLength(255),
+                                ->maxLength(1999),
                             Forms\Components\TextInput::make('citation')
                                 ->translateLabel()
                                 ->numeric()
