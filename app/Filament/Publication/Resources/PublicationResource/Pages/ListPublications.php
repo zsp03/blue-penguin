@@ -68,7 +68,7 @@ class ListPublications extends ListRecords
                                 ]
                             );
 
-                            if ($lecturer->exists() && $name) {
+                            if ($lecturer->exists && $name) {
                                 $existingLecturer = Lecturer::where('name', $name)->first();
                             }
 
