@@ -215,7 +215,7 @@ class PublicationResource extends Resource
             ])->deferLoading()
             ->filters([
                 Tables\Filters\SelectFilter::make('lecturers')
-                    ->hidden(auth()->user()->role != 'admin')
+                    ->hidden(auth()->user()->role != '0')
                     ->native(false)
                     ->label(__('Researcher'))
                     ->searchable()
