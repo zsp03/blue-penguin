@@ -3,8 +3,10 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Publication;
+use Filament\Facades\Filament;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class PublicationLineChart extends ChartWidget
@@ -19,6 +21,7 @@ class PublicationLineChart extends ChartWidget
         return (__('Shows all registered Publications by type each year'));
     }
 
+
     protected static ?array $options = [
         'elements' => [
             'line' => [
@@ -31,6 +34,9 @@ class PublicationLineChart extends ChartWidget
         $yearData = collect(range(Publication::min('year'), Publication::max('year')));
         $data = Publication::selectRaw("year as year, count(*) as count")
             ->where('type', $type)
+            ->whereHas('lecturers', function (Builder $query){
+                return $query->where('nip', auth()->user()->lecturer?->nip);
+            })
             ->groupBy('year')
             ->get()
             ->pluck('count', 'year');

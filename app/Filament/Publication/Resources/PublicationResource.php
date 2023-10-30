@@ -8,6 +8,7 @@ use App\Filament\Publication\Resources\PublicationResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
 use App\Models\Publication;
 use App\Models\Student;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -25,6 +26,18 @@ class PublicationResource extends Resource
     public static function getPluralLabel(): ?string
     {
         return __('Publications');
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $panelId = Filament::getCurrentPanel()->getId();
+        if ($panelId == 'publication') {
+            return parent::getEloquentQuery()->whereHas('lecturers', function (Builder $query) {
+                return $query
+                    ->where('nip', auth()->user()->lecturer?->nip);
+            });
+        }
+        return parent::getEloquentQuery();
     }
 
     public static function getGloballySearchableAttributes(): array
@@ -202,6 +215,7 @@ class PublicationResource extends Resource
             ])->deferLoading()
             ->filters([
                 Tables\Filters\SelectFilter::make('lecturers')
+                    ->hidden(auth()->user()->role != 'admin')
                     ->native(false)
                     ->label(__('Researcher'))
                     ->searchable()

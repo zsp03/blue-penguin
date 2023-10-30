@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\AccountOverviewCustom;
 use App\Filament\Widgets\PublicationChart;
+use App\Filament\Widgets\PublicationLineChart;
 use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -40,8 +42,9 @@ class PublicationPanelProvider extends PanelProvider
             ->pages([])
             ->discoverWidgets(in: app_path('Filament/Publication/Widgets'), for: 'App\\Filament\\Publication\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                AccountOverviewCustom::class,
+                PublicationChart::class,
+                PublicationLineChart::class,
             ])
             ->sidebarCollapsibleOnDesktop()
             ->plugins([
