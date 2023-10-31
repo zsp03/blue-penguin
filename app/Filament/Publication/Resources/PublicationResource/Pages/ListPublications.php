@@ -58,33 +58,25 @@ class ListPublications extends ListRecords
                                 $nip = $lecturerData;
                             } else $name = $lecturerData;
 
-                            $lecturer = Lecturer::firstOrNew(
-                                [
-                                    'nip' => $nip
-                                ],
-                                [
-                                    'name' => $nip,
-                                    'nip' => 'DL' . crc32(uniqid())
-                                ]
-                            );
-
-                            if ($lecturer->exists && $name) {
-                                $existingLecturer = Lecturer::where('name', $name)->first();
-                            }
-
-                            if ($existingLecturer) {
-                                $lecturer = $existingLecturer;
+                            if (isset($nip)) {
+                                $lecturersData[] = $nip;
                             } else {
-                                $lecturer->name = $name;
-                                $lecturer->save();
+                                $lecturer = Lecturer::firstOrCreate(
+                                    [
+                                        'name' => $name
+                                    ],
+                                    [
+                                        'nip' => 'DL' . crc32(uniqid())
+                                    ]
+                                );
                             }
 
-                            $lecturersData[] = $lecturer->nip;
+                            if (isset($lecturer)) {
+                                $lecturersData[] = $lecturer->nip;
+                            }
                         }
 
-//                        $lecturers = Lecturer::whereIn('nip', $lecturersData)->get();
-
-                        return $lecturersData;
+                        return Lecturer::whereIn('nip', $lecturersData)->get();
                     };
 
                     $studentIds = function () use ($data, $isStudentsEmpty) {
