@@ -2,6 +2,7 @@
 
 namespace App\Filament\Publication\Resources;
 
+use App\Enums\PublicationScale;
 use App\Filament\Publication\Resources\PublicationResource\Widgets\PublicationStats;
 use App\Filament\Publication\Resources\PublicationResource\Pages;
 use App\Filament\Publication\Resources\PublicationResource\RelationManagers;
@@ -114,10 +115,7 @@ class PublicationResource extends Resource
                             Forms\Components\Select::make('scale')
                                 ->label(__('Scale'))
                                 ->native(false)
-                                ->options([
-                                    'Nasional' => (__('National')),
-                                    'Internasional' => (__('International')),
-                                ]),
+                                ->options(PublicationScale::class),
                         ])
                             ->columns(2)
                             ->collapsible(),
@@ -184,11 +182,9 @@ class PublicationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
-                    ->formatStateUsing(fn (string $state): string => match($state){
-                        'Nasional' => (__('National')),
-                        'Internasional' => (__('International')),
-                        default => ''
-                    })
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_funds')
                     ->label(__('Total Funds'))
