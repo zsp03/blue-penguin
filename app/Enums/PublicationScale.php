@@ -9,8 +9,8 @@ use Filament\Support\Contracts\HasLabel;
 
 enum PublicationScale: string implements HasLabel, HasColor, HasIcon
 {
-    case NATIONAL = 'national';
-    case INTERNATIONAL = 'international';
+    case NATIONAL = 'nasional';
+    case INTERNATIONAL = 'internasional';
 
     public function getLabel(): ?string
     {

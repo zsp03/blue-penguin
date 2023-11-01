@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\PublicationScale;
+use App\Enums\PublicationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -26,6 +27,7 @@ class Publication extends Model
     protected $casts = [
         'authors' => 'array',
         'scale' => PublicationScale::class,
+        'type' => PublicationType::class
     ];
 
     public function lecturers(): BelongsToMany

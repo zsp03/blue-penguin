@@ -3,6 +3,7 @@
 namespace App\Filament\Publication\Resources;
 
 use App\Enums\PublicationScale;
+use App\Enums\PublicationType;
 use App\Filament\Publication\Resources\PublicationResource\Widgets\PublicationStats;
 use App\Filament\Publication\Resources\PublicationResource\Pages;
 use App\Filament\Publication\Resources\PublicationResource\RelationManagers;
@@ -164,21 +165,7 @@ class PublicationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('Type'))
-                    ->formatStateUsing(function (string $state): string {
-                        return match ($state) {
-                            'jurnal' => (__('Journal')),
-                            'penelitian' => (__('Research')),
-                            'prosiding' => (__('Proceeding')),
-                            'pengabdian' => (__('Service')),
-                        };
-                    })
                     ->badge()
-                    ->colors([
-                        'success' => 'jurnal',
-                        'info' => 'penelitian',
-                        'gray' => 'prosiding',
-                        'violet' => 'pengabdian',
-                    ])
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
@@ -227,12 +214,7 @@ class PublicationResource extends Resource
                     ->relationship('students', 'name'),
                 Tables\Filters\SelectFilter::make('type')
                     ->translateLabel()
-                    ->options([
-                        'jurnal' => (__('Journal')),
-                        'penelitian' => (__('Research')),
-                        'prosiding' => (__('Proceeding')),
-                        'pengabdian' => (__('Service')),
-                    ])
+                    ->options(PublicationType::class)
                     ->multiple()
                     ->native(false),
                 Tables\Filters\Filter::make('year')
