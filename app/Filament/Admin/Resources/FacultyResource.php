@@ -18,7 +18,11 @@ class FacultyResource extends Resource
     protected static ?string $model = Faculty::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
-    protected static ?string $navigationGroup = 'Management';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Management');
+    }
+
     public static function getPluralLabel(): ?string
     {
         return __('Faculty');

@@ -6,6 +6,7 @@ use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -44,12 +45,11 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([])
             ->navigationGroups([
-                'Content',
-                'Management',
-                'Konten',
-                'Manajemen'
+                NavigationGroup::make()
+                    ->label(fn ():string => __('Content')),
+                NavigationGroup::make()
+                    ->label(fn ():string => __('Management')),
             ])
-
             ->plugins([
                 SpotlightPlugin::make(),
                 FilamentLanguageSwitchPlugin::make(),
