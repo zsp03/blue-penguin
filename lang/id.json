@@ -70,5 +70,15 @@
     "Your students that has not yet complete their Final Project": "Mahasiswa yang Belum Menyelesaikan Tugas Akhirnya",
     "Attach Lecturer": "Lampirkan Dosen",
     "Attach Student": "Lampirkan Mahasiswa",
-    "filament-import::actions.skip_header": "Lewatkan Header"
+    "filament-import::actions.skip_header": "Lewatkan Header",
+    "Faculty": "Fakultas",
+    "Intellectual Properties": "HKI",
+    "Inventors": "Penemu",
+    "Registered": "Terdaftar",
+    "Granted": "Diterima",
+    "Type of Invention": "Jenis Karya",
+    "General Information": "Informasi Umum",
+    "Inventors Information": "Informasi Penemu",
+    "Intellectual Property Information": "Informasi HKI",
+    "Invention Output": "Luaran Karya"
 }
