@@ -53,7 +53,7 @@ class PublicationResource extends Resource
         foreach ($record->lecturers as $lecturer){
             $lecturerList[] = $lecturer->name;
         }
-        return array_combine(range(1, count($lecturerList)), array_values($lecturerList));
+        return $lecturerList;
     }
 
     public static function getGlobalSearchEloquentQuery(): Builder
