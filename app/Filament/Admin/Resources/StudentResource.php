@@ -31,7 +31,10 @@ class StudentResource extends Resource
     }
 
     protected static ?string $navigationIcon = 'phosphor-student-fill';
-    protected static ?string $navigationGroup = 'Management';
+    public static function getNavigationGroup(): ?string
+    {
+        return (__('Management'));
+    }
 
 
     public static function form(Form $form): Form

@@ -32,8 +32,10 @@ class UserResource extends Resource
     }
 
     protected static ?string $navigationIcon = 'phosphor-users-four';
-    protected static ?string $navigationGroup = 'Management';
-
+    public static function getNavigationGroup(): ?string
+    {
+        return (__('Management'));
+    }
 
 
     public static function form(Form $form): Form

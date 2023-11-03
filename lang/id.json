@@ -53,7 +53,7 @@
     "Password": "Kata Kunci",
     "Updated at": "Terakhir diubah pada",
     "Role": "Peran",
-    "Submitted at": "Dikirimkan pada",
+    "Submitted at": "Diajukan pada",
     "Make Final Project": "Buat Tugas Akhir",
     "Make Publication": "Buat Publikasi",
     "Ongoing": "Dalam Pengerjaan",
@@ -70,5 +70,7 @@
     "Your students that has not yet complete their Final Project": "Mahasiswa yang Belum Menyelesaikan Tugas Akhirnya",
     "Attach Lecturer": "Lampirkan Dosen",
     "Attach Student": "Lampirkan Mahasiswa",
-    "filament-import::actions.skip_header": "Lewatkan Header"
+    "filament-import::actions.skip_header": "Lewatkan Header",
+    "Content": "Isi",
+    "Management": "Manajemen"
 }

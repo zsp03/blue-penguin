@@ -45,8 +45,11 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([])
             ->navigationGroups([
                 'Content',
-                'Management'
+                'Management',
+                'Isi',
+                'Manajemen'
             ])
+
             ->plugins([
                 SpotlightPlugin::make(),
                 FilamentLanguageSwitchPlugin::make(),
