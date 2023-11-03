@@ -20,7 +20,7 @@ class ListPublications extends ListRecords
         return [
             Actions\CreateAction::make(),
             ImportAction::make()
-            ->fields([
+                ->fields([
                 ImportField::make('title'),
                 ImportField::make('authors'),
                 ImportField::make('students'),
@@ -116,7 +116,8 @@ class ListPublications extends ListRecords
                         return $publication;
                     };
                     return $newPublication();
-                }),
+                })
+                ->hidden(auth()->user()->role !== '0'),
         ];
     }
 
