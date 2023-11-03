@@ -46,7 +46,7 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 'Content',
                 'Management',
-                'Isi',
+                'Konten',
                 'Manajemen'
             ])
 

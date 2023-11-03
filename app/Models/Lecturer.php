@@ -30,4 +30,8 @@ class Lecturer extends Model
     {
         return $this->belongsToMany(FinalProject::class)->withPivot('role');
     }
+    public function hakis(): BelongsToMany
+    {
+        return $this->belongsToMany(Haki::class);
+    }
 }

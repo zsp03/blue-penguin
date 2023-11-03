@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 
 class LecturerResource extends Resource
@@ -34,7 +35,10 @@ class LecturerResource extends Resource
     }
 
     protected static ?string $navigationIcon = 'phosphor-chalkboard-teacher';
-    protected static ?string $navigationGroup = 'Management';
+    public static function getNavigationGroup(): ?string
+    {
+        return (__('Management'));
+    }
 
     public static function form(Form $form): Form
     {
@@ -125,7 +129,6 @@ class LecturerResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('updated_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
@@ -138,6 +141,7 @@ class LecturerResource extends Resource
                 Tables\Columns\TextColumn::make('nip')
                     ->label('NIP')
                     ->copyable()
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->translateLabel()
@@ -151,7 +155,17 @@ class LecturerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('nip')
+                    ->label('Tampilkan Data')
+                    ->native(false)
+                    ->placeholder('with NIP')
+                    ->trueLabel('other than NIP')
+                    ->falseLabel('All')
+                    ->queries(
+                        true: fn (Builder $query) => $query->whereRaw('CHAR_LENGTH(nip) != 18 OR NOT nip REGEXP \'^[0-9]+$\''),
+                        false: fn (Builder $query) => $query->get(),
+                        blank: fn (Builder $query) => $query->where('nip', 'REGEXP', '[0-9]{18}$')
+                    )
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -169,7 +183,7 @@ class LecturerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\PublicationsRelationManager::class
         ];
     }
 

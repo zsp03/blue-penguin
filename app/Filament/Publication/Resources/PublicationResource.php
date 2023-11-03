@@ -24,7 +24,11 @@ class PublicationResource extends Resource
 {
     protected static ?string $model = Publication::class;
     protected static ?string $recordTitleAttribute = 'title';
-    protected static ?string $navigationGroup = 'Content';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Content');
+    }
+
     public static function getPluralLabel(): ?string
     {
         return __('Publications');
@@ -53,6 +57,11 @@ class PublicationResource extends Resource
         foreach ($record->lecturers as $lecturer){
             $lecturerList[] = $lecturer->name;
         }
+
+        if (empty($lecturerList)){
+            return [];
+        }
+
         return array_combine(range(1, count($lecturerList)), array_values($lecturerList));
     }
 

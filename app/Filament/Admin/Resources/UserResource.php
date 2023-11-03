@@ -37,7 +37,6 @@ class UserResource extends Resource
         return (__('Management'));
     }
 
-
     public static function form(Form $form): Form
     {
         return $form

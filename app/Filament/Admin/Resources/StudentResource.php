@@ -36,7 +36,6 @@ class StudentResource extends Resource
         return (__('Management'));
     }
 
-
     public static function form(Form $form): Form
     {
         return $form
@@ -123,3 +122,4 @@ class StudentResource extends Resource
         ];
     }
 }
+
