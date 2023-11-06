@@ -45,6 +45,9 @@ class UserResource extends Resource
                     ->translateLabel()
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('username')
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->unique(ignoreRecord: true)
@@ -77,6 +80,8 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('username')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),

@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\CustomLogin;
 use App\Filament\Widgets\AccountOverviewCustom;
 use App\Filament\Widgets\PublicationChart;
 use App\Filament\Widgets\PublicationLineChart;
@@ -33,7 +34,7 @@ class PublicationPanelProvider extends PanelProvider
             ->favicon(asset('favicon.ico'))
             ->id('publication')
             ->path('pubs')
-            ->login()
+            ->login(CustomLogin::class)
             ->colors([
                 'primary' => Color::Sky,
             ])
