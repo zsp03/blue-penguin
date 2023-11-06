@@ -64,13 +64,41 @@ class ListHakis extends ListRecords
                     }
 
                     $inventorsId = function () use ($data) {
-                        $explodedInventorsData = explode(', ', $data['inventors']);
-                        $inventors = Lecturer::whereIn('nip', $explodedInventorsData)->get();
-                        return $inventors->pluck('id')->toArray();
+                        $explodedLecturersData = explode(', ', $data['inventors']);
+                        $lecturersData = array();
+
+                        foreach ($explodedLecturersData as $lecturerData) {
+                            $nip = null;
+                            $name = null;
+
+                            if (is_numeric($lecturerData)) {
+                                $nip = $lecturerData;
+                            } else $name = $lecturerData;
+
+                            if (isset($nip)) {
+                                $lecturersData[] = $nip;
+                            } else {
+                                $lecturer = Lecturer::firstOrCreate(
+                                    [
+                                        'name' => $name
+                                    ],
+                                    [
+                                        'nip' => 'DL' . crc32(uniqid())
+                                    ]
+                                );
+                            }
+
+                            if (isset($lecturer)) {
+                                $lecturersData[] = $lecturer->nip;
+                            }
+                        }
+
+                        return Lecturer::whereIn('nip', $lecturersData)->get();
                     };
 
+
                     $facultiesId = function () use ($data) {
-                        $explodedFacultiesData = explode(',  ', $data['faculties']);
+                        $explodedFacultiesData = explode(', ', $data['faculties']);
                         $faculties = Faculty::whereIn('name', $explodedFacultiesData)->get();
                         return $faculties->pluck('id')->toArray();
                     };
