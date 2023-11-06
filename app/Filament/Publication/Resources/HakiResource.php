@@ -75,6 +75,7 @@ class HakiResource extends Resource
                             ->heading(__('General Information'))
                             ->schema([
                                 Forms\Components\TextInput::make('name')
+                                    ->translateLabel()
                                     ->required()
                                     ->maxLength(255),
                                 Forms\Components\Grid::make()
@@ -83,6 +84,7 @@ class HakiResource extends Resource
                                             ->label(__('Type of Invention'))
                                             ->maxLength(255),
                                         Forms\Components\Select::make('scale')
+                                            ->translateLabel()
                                             ->native(false)
                                             ->options(PublicationScale::class),
                                         Forms\Components\TextInput::make('year')
@@ -115,6 +117,7 @@ class HakiResource extends Resource
                                 Forms\Components\Grid::make()
                                     ->schema([
                                         Forms\Components\TextInput::make('haki_type')
+                                            ->translateLabel()
                                             ->maxLength(255),
                                         Forms\Components\Select::make('status')
                                             ->native(false)
@@ -124,12 +127,15 @@ class HakiResource extends Resource
                                 Forms\Components\Grid::make()
                                     ->schema([
                                         Forms\Components\TextInput::make('registration_no')
+                                            ->translateLabel()
                                             ->maxLength(255),
                                         Forms\Components\TextInput::make('haki_no')
+                                            ->translateLabel()
                                             ->maxLength(255),
                                     ])
                                     ->columns(2),
                                 Forms\Components\TextInput::make('registered_at')
+                                    ->translateLabel()
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('link')
                                     ->maxLength(2000),
@@ -198,10 +204,12 @@ class HakiResource extends Resource
                 Tables\Columns\TextColumn::make('haki_type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

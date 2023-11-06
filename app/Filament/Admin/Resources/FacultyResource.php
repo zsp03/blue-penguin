@@ -35,6 +35,7 @@ class FacultyResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->unique()
+                    ->translateLabel()
                     ->maxLength(255),
             ]);
     }
@@ -44,14 +45,17 @@ class FacultyResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->translateLabel(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
+                    ->translateLabel()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
+                    ->translateLabel()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

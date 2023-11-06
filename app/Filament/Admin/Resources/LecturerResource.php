@@ -156,7 +156,7 @@ class LecturerResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('nip')
-                    ->label('Tampilkan Data')
+                    ->label(__('Display Data'))
                     ->native(false)
                     ->placeholder('with NIP')
                     ->trueLabel('other than NIP')
