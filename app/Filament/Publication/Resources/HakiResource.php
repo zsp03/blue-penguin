@@ -22,6 +22,7 @@ class HakiResource extends Resource
     protected static ?string $model = Haki::class;
     protected static ?string $navigationIcon = 'phosphor-medal';
     protected static ?int $navigationSort = 3;
+    protected static ?string $recordTitleAttribute = 'name';
     public static function getNavigationGroup(): ?string
     {
         return __('Content');
