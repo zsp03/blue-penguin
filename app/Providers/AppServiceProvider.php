@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Filament\Auth\CustomLogout;
 use BezhanSalleh\PanelSwitch\PanelSwitch;
+use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Support\Facades\URL;
@@ -26,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
+
+        $this->app->bind(LogoutResponseContract::class, CustomLogout::class);
 
         FilamentColor::register([
             'violet' => Color::hex('#6B33AF')

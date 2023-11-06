@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //Route::redirect('/', '/admin');
-Route::get('/', StartingMenu::class);
+Route::get('/', StartingMenu::class)->name('starting-menu');
 
 Route::middleware([
     'auth:sanctum',
