@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class HakiResource extends Resource
@@ -29,6 +30,25 @@ class HakiResource extends Resource
     public static function getPluralLabel(): ?string
     {
         return __('Intellectual Properties');
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        $lecturerList = [];
+        foreach ($record->lecturers as $lecturer){
+            $lecturerList[] = $lecturer->name;
+        }
+
+        if (empty($lecturerList)){
+            return [];
+        }
+
+        return array_combine(range(1, count($lecturerList)), array_values($lecturerList));
     }
 
 

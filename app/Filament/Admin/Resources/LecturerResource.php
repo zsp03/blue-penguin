@@ -183,7 +183,8 @@ class LecturerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\PublicationsRelationManager::class
+            RelationManagers\PublicationsRelationManager::class,
+            RelationManagers\HakisRelationManager::class
         ];
     }
 
