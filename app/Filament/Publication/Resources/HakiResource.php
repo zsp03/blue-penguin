@@ -8,6 +8,7 @@ use App\Filament\Publication\Resources\HakiResource\Pages;
 use App\Filament\Publication\Resources\HakiResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
 use App\Models\Haki;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -52,6 +53,17 @@ class HakiResource extends Resource
         return array_combine(range(1, count($lecturerList)), array_values($lecturerList));
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $panelId = Filament::getCurrentPanel()->getId();
+        if ($panelId == 'publication') {
+            return parent::getEloquentQuery()->whereHas('lecturers', function (Builder $query) {
+                return $query
+                    ->where('nip', auth()->user()->lecturer?->nip);
+            });
+        }
+        return parent::getEloquentQuery();
+    }
 
     public static function form(Form $form): Form
     {

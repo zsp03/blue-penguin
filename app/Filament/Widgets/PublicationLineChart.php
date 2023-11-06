@@ -32,14 +32,24 @@ class PublicationLineChart extends ChartWidget
 
     public function getPublicationData(string $type): Collection {
         $yearData = collect(range(Publication::min('year'), Publication::max('year')));
-        $data = Publication::selectRaw("year as year, count(*) as count")
-            ->where('type', $type)
-            ->whereHas('lecturers', function (Builder $query){
-                return $query->where('nip', auth()->user()->lecturer?->nip);
-            })
-            ->groupBy('year')
-            ->get()
-            ->pluck('count', 'year');
+        if (\filament()->getCurrentPanel()->getId() == 'publication'){
+            $data = Publication::selectRaw("year as year, count(*) as count")
+                ->where('type', $type)
+                ->whereHas('lecturers', function (Builder $query){
+                    return $query->where('nip', auth()->user()->lecturer?->nip);
+                })
+                ->groupBy('year')
+                ->get()
+                ->pluck('count', 'year');
+        } else {
+            $data = Publication::selectRaw("year as year, count(*) as count")
+                ->where('type', $type)
+                ->groupBy('year')
+                ->get()
+                ->pluck('count', 'year');
+        }
+
+
 
         return $yearData
             ->mapWithKeys(function ($year) use ($data) {
