@@ -3,6 +3,13 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\CustomLogin;
+use App\Filament\Widgets\AccountOverviewCustom;
+use App\Filament\Widgets\FinalProjectChart;
+use App\Filament\Widgets\FinalProjectStudentGraph;
+use App\Filament\Widgets\HakiChart;
+use App\Filament\Widgets\PublicationChart;
+use App\Filament\Widgets\PublicationLineChart;
+use App\Filament\Widgets\StatsOverview;
 use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -44,7 +51,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([])
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label(fn ():string => __('Content')),
