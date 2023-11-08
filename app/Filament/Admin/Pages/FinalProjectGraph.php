@@ -15,7 +15,7 @@ class FinalProjectGraph extends Page
     protected function getHeaderWidgets(): array
     {
         return [
-            Widgets\FinalProjectStudentGraph::class,
+            Widgets\FinalProjectStudentApexChart::class,
         ];
     }
 }
