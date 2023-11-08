@@ -25,3 +25,11 @@
 .fi-badge > span > span {
     overflow: visible;
 }
+
+.apexcharts-menu {
+    right: auto!important;
+}
+
+.apexcharts-toolbar {
+    right: auto!important;
+}

@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\FinalProject;
+use Filament\Forms\Components\Select;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
@@ -21,7 +22,7 @@ class FinalProjectStudentApexChart extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'FinalProjectStudentApexChart';
+    protected static ?string $heading = 'Final Project Graph';
 
     public int $height = 3240;
     protected function getContentHeight(): ?int
@@ -69,11 +70,36 @@ class FinalProjectStudentApexChart extends ApexChartWidget
      *
      * @return array
      */
+
+    protected function getFilters(): ?array
+    {
+        return [
+            'all' => __('All'),
+            'okay' => __("Less than 180 days"),
+            'warning' => __("Between 180 to 540 days"),
+            'danger' => __("More than 540 days"),
+        ];
+    }
+
     protected function getOptions(): array
     {
-        $data = $this->getStudentFinalProject()->pluck('days')->toArray();
-        $labels = $this->getStudentFinalProject()->pluck('name')->toArray();
-        $colors = $this->getStudentFinalProject()->pluck('color')->toArray();
+        if ($this->filter == 'danger') {
+            $finalProjects = $this->getStudentFinalProject()->filter(function ($item) {
+                return $item['days'] > 540;
+            });
+        } elseif ($this->filter == 'warning') {
+            $finalProjects = $this->getStudentFinalProject()->filter(function ($item) {
+                return $item['days'] > 180 && $item['days'] <= 540;
+            });
+        } elseif ($this->filter == 'okay') {
+            $finalProjects = $this->getStudentFinalProject()->filter(function ($item) {
+                return $item['days'] <= 180;
+            });
+        } else $finalProjects = $this->getStudentFinalProject();
+
+        $data = $finalProjects->pluck('days')->toArray();
+        $labels = $finalProjects->pluck('name')->toArray();
+        $colors = $finalProjects->pluck('color')->toArray();
 
         $this->height = 33.65 * count($data) + 312;
 
