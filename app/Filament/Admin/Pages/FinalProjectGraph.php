@@ -17,6 +17,11 @@ class FinalProjectGraph extends Page
     }
 
     protected static ?string $navigationGroup = 'Statistics';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Statistics');
+    }
+
     protected function getHeaderWidgets(): array
     {
         return [

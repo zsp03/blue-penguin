@@ -88,5 +88,10 @@
     "Registration no": "Nomor Registrasi",
     "Registered at": "Terdaftar pada",
     "Display Data": "Tampilkan Data",
-    "Days after Proposal": "Hari setelah Proposal"
+    "Days after Proposal": "Hari setelah Proposal",
+    "Statistics": "Statistik",
+    "More than 540 days": "Lebih dari 540 hari",
+    "Less than 180 days": "Kurang dari 180 hari",
+    "Between 180 to 540 days": "Antara 180 sampai 540 hari",
+    "Final Project Graph": "Grafik Tugas Akhir"
 }

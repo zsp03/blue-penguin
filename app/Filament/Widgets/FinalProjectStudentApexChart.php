@@ -23,6 +23,10 @@ class FinalProjectStudentApexChart extends ApexChartWidget
      * @var string|null
      */
     protected static ?string $heading = 'Final Project Graph';
+    protected function getHeading(): ?string
+    {
+        return __('Final Project Graph');
+    }
 
     public int $height = 3240;
     protected function getContentHeight(): ?int
@@ -135,8 +139,8 @@ class FinalProjectStudentApexChart extends ApexChartWidget
             ],
             'legend' => [
                 'customLegendItems' => [
-                    __('Less than 180 Days'),
-                    __('Between 180 and 540 days'),
+                    __('Less than 180 days'),
+                    __('Between 180 to 540 days'),
                     __('More than 540 days')
                 ],
                 'markers' => [
