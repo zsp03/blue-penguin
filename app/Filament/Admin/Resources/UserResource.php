@@ -17,7 +17,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $recordTitleAttribute = 'email';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function getGloballySearchableAttributes(): array
     {
@@ -26,9 +26,19 @@ class UserResource extends Resource
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
-        return [
-            '' => $record->name,
-        ];
+        $details = [];
+        $email = $record->email;
+        $username = $record->username;
+
+        if ($email !== null) {
+            $details['Email'] =  $email;
+        }
+
+        if ($username !== null) {
+            $details['Username'] = $username;
+        }
+
+        return $details;
     }
 
     protected static ?string $navigationIcon = 'phosphor-users-four';
