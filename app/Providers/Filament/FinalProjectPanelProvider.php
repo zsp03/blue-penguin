@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\CustomLogin;
+use App\Filament\FinalProject\Pages\Auth\CustomProfile;
 use App\Filament\FinalProject\Resources\FinalProjectResource\Widgets\FinalProjectStudentChart;
 use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -33,6 +34,7 @@ class FinalProjectPanelProvider extends PanelProvider
             ->id('finalProject')
             ->path('tugas-akhir')
             ->login(CustomLogin::class)
+            ->profile(CustomProfile::class)
             ->colors([
                 'primary' => Color::Violet,
             ])

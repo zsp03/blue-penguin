@@ -2,24 +2,16 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Admin\Pages\Auth\CustomProfile;
 use App\Filament\Auth\CustomLogin;
-use App\Filament\Widgets\AccountOverviewCustom;
-use App\Filament\Widgets\FinalProjectChart;
-use App\Filament\Widgets\FinalProjectStudentGraph;
-use App\Filament\Widgets\HakiChart;
-use App\Filament\Widgets\PublicationChart;
-use App\Filament\Widgets\PublicationLineChart;
-use App\Filament\Widgets\StatsOverview;
 use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationGroup;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -41,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(CustomLogin::class)
+            ->profile(CustomProfile::class)
             ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => Color::Emerald,

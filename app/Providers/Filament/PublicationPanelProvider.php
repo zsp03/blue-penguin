@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\CustomLogin;
+use App\Filament\Publication\Pages\Auth\CustomProfile;
 use App\Filament\Widgets\AccountOverviewCustom;
 use App\Filament\Widgets\PublicationChart;
 use App\Filament\Widgets\PublicationLineChart;
@@ -35,6 +36,7 @@ class PublicationPanelProvider extends PanelProvider
             ->id('publication')
             ->path('pubs')
             ->login(CustomLogin::class)
+            ->profile(CustomProfile::class)
             ->colors([
                 'primary' => Color::Sky,
             ])
