@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\HakiStatus;
+use App\Enums\HakiType;
 use App\Enums\PublicationScale;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,8 @@ class Haki extends Model
 
     protected $casts = [
         'scale' => PublicationScale::class,
-        'status' => HakiStatus::class
+        'status' => HakiStatus::class,
+        'haki_type' => HakiType::class
     ];
 
     public function lecturers(): BelongsToMany

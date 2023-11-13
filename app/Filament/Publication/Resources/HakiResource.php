@@ -200,7 +200,8 @@ class HakiResource extends Resource
                 Tables\Columns\TextColumn::make('year')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('link')
-                    ->searchable(),
+                    ->searchable()
+                    ->view('filament.tables.columns.click-here'),
                 Tables\Columns\TextColumn::make('haki_type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
