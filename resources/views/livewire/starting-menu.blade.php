@@ -3,7 +3,7 @@
         <span
             class="font-bold text-lg text-center text-gray-400 dark:text-gray-200 break-words panel-switch-card-title"
         >
-                Heading Here
+                Panel Switch
         </span>
     </div>
     <div class="flex flex-col flex-grow sm:flex-row items-center justify-center gap-4 md:gap-6 w-full">
@@ -17,7 +17,7 @@
                     @php
                         $iconName = $icons[$panel->getId()] ?? 'heroicon-s-square-2-stack' ;
                     @endphp
-                    @svg($iconName, 'text-white panel-switch-card-icon', ['style' => 'width: ' . (32 * 4) . 'px; height: ' . (32 * 4). 'px;'])
+                    @svg($iconName, 'text-gray-600 dark:text-white panel-switch-card-icon', ['style' => 'width: ' . (32 * 4) . 'px; height: ' . (32 * 4). 'px;'])
                 </div>
                 <span
                     class="mt-2 text-sm font-medium text-center text-gray-400 dark:text-gray-200 break-words panel-switch-card-title group-hover:text-primary-600 group-hover:dark:text-primary-400"
