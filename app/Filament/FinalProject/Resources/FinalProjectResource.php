@@ -110,7 +110,7 @@ class FinalProjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('submitted_at', 'desc')
+            ->defaultSort('submitted_at')
             ->columns([
                 Tables\Columns\TextColumn::make('student.name')
                     ->label(__('Student'))
@@ -146,6 +146,7 @@ class FinalProjectResource extends Resource
                         return $list;
                     }),
                 Tables\Columns\TextColumn::make('submitted_at')
+                    ->sortable()
                     ->translateLabel()
                     ->label(__("Proposed at"))
                     ->date('d F Y')
@@ -173,9 +174,9 @@ class FinalProjectResource extends Resource
                     })
                     ->color(function (FinalProject $record) {
                         $start_date = Carbon::parse($record->submitted_at);
-                        if ($start_date->diffInDays(now()) >= 180) {
+                        if ($start_date->diffInDays(now()) >= 540) {
                             return 'danger';
-                        } elseif ($start_date->diffInDays(now()) >= 90)
+                        } elseif ($start_date->diffInDays(now()) >= 180)
                         {
                             return 'warning';
                         } else return 'success';
@@ -217,14 +218,20 @@ class FinalProjectResource extends Resource
                     ->relationship('lecturers', 'name', function (Builder $query) {
                         return $query->where('role', 'evaluator');
                     }),
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'Ongoing' => 'Ongoing',
+                        'Done' => 'Done'
+                    ])
+                    ->default('Ongoing'),
                 Tables\Filters\Filter::make('time')->form([
                     Forms\Components\Select::make('elapsed_time')
                         ->label(__('Elapsed Time'))
                         ->native(false)
                         ->options([
-                            'okay' => '<span class="font-medium text-success-600 dark:text-success-400">'.__("Less than 90 days").'</span>',
-                            'warning' => '<span class="font-medium text-warning-600 dark:text-warning-400">'.__("Between 90 to 180 days").'</span>',
-                            'danger' => '<span class="font-medium text-danger-600 dark:text-danger-400">'.__("More than 180 days").'</span>',
+                            'okay' => '<span class="font-medium text-success-600 dark:text-success-400">'.__("Less than 180 days").'</span>',
+                            'warning' => '<span class="font-medium text-warning-600 dark:text-warning-400">'.__("Between 180 to 540 days").'</span>',
+                            'danger' => '<span class="font-medium text-danger-600 dark:text-danger-400">'.__("More than 540 days").'</span>',
                         ])
                         ->allowHtml(),
                 ])
@@ -232,21 +239,21 @@ class FinalProjectResource extends Resource
                     return $query
                         ->when(
                             $data['elapsed_time'] == 'okay',
-                            fn(Builder $query, $date): Builder => $query->whereDate('submitted_at', '>=', now()->subDays(90))
+                            fn(Builder $query, $date): Builder => $query->whereDate('submitted_at', '>=', now()->subDays(180))
                         )
                         ->when(
                             $data['elapsed_time'] == 'warning',
-                            fn(Builder $query, $date): Builder => $query->whereBetween('submitted_at', [now()->subDays(180), now()->subDays(90)])
+                            fn(Builder $query, $date): Builder => $query->whereBetween('submitted_at', [now()->subDays(180), now()->subDays(540)])
                         )
                         ->when(
                             $data['elapsed_time'] == 'danger',
-                            fn(Builder $query, $date): Builder => $query->whereDate('submitted_at', '<', now()->subDays(180))
+                            fn(Builder $query, $date): Builder => $query->whereDate('submitted_at', '<', now()->subDays(540))
                         );
                 }),
             ])
             ->filtersFormColumns([
                 'md' => 2,
-                'lg' => 4
+                'lg' => 5
             ])
             ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
