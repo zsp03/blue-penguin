@@ -243,7 +243,7 @@ class FinalProjectResource extends Resource
                         )
                         ->when(
                             $data['elapsed_time'] == 'warning',
-                            fn(Builder $query, $date): Builder => $query->whereBetween('submitted_at', [now()->subDays(180), now()->subDays(540)])
+                            fn(Builder $query, $date): Builder => $query->whereBetween('submitted_at', [now()->subDays(540), now()->subDays(180)])
                         )
                         ->when(
                             $data['elapsed_time'] == 'danger',
