@@ -13,7 +13,8 @@ class ListFaculties extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->modalHeading(__('Make Faculty')),
         ];
     }
 }

@@ -40,8 +40,8 @@ class AppServiceProvider extends ServiceProvider
                 ->modalWidth('lg')
                 ->slideOver()
                 ->labels([
-                    'publication' => 'Publikasi',
-                    'finalProject' => 'Tugas Akhir',
+                    'publication' => __('Publication'),
+                    'finalProject' => __('Final Project'),
                 ])
                 ->icons([
                     'admin' => 'heroicon-m-users',
