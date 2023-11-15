@@ -16,9 +16,11 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\HtmlString;
 
 class FinalProjectResource extends Resource
 {
@@ -110,17 +112,25 @@ class FinalProjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->searchPlaceholder('Search Name, NIM, or Title ')
             ->defaultSort('submitted_at')
             ->columns([
                 Tables\Columns\TextColumn::make('student.name')
                     ->label(__('Student'))
-                    ->searchable()
                     ->wrap()
-                    ->description(fn (FinalProject $record): string => $record->student->nim),
-                Tables\Columns\TextColumn::make('title')
-                    ->translateLabel()
-                    ->wrap()
-                    ->searchable(),
+                    ->description(fn (FinalProject $record): string => $record->student->nim, position: 'above')
+                    ->description(function (FinalProject $record): Htmlable {
+                        return new HtmlString("<span class='text-gray-600 dark:text-gray-500 text-xs'>$record->title</span>");
+                    })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query
+                            ->whereHas('student', function ($query) use ($search): Builder {
+                                return $query
+                                    ->where('name', 'like', "%{$search}%")
+                                    ->orWhere('nim', 'like', "%{$search}%");
+                            })
+                            ->orWhere('title', 'like',"%{$search}%");
+                    }),
                 SupervisorsList::make('supervisor')
                     ->translateLabel()
                     ->state(function (FinalProject $record) {

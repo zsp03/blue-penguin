@@ -16,10 +16,12 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\HtmlString;
 
 class HakiResource extends Resource
 {
@@ -195,15 +197,18 @@ class HakiResource extends Resource
             ->searchPlaceholder('Search by IPs, Type, or Year')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->description(function (Haki $record): string {
-                        return $record->haki_type->getLabel()
+                    ->description(function (Haki $record): Htmlable {
+                        $haki_type = $record->haki_type->getLabel();
+                        return new HtmlString("<span class='text-xs'>" .
+                            "$haki_type"
                             . ' | ' .
-                            $record->type
+                            "$record->type"
                             . ' | ' .
-                            $record->year;
+                            "$record->year" .
+                            "</span>");
                     }, position: 'above')
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Small)
-                    ->limit(50)
+                    ->limit(60)
                     ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
 
