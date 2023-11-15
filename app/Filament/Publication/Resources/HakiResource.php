@@ -14,6 +14,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -191,21 +192,48 @@ class HakiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->searchPlaceholder('Search by IPs, Type, or Year')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->description(function (Haki $record): string {
+                        return $record->haki_type->getLabel()
+                            . ' | ' .
+                            $record->type
+                            . ' | ' .
+                            $record->year;
+                    }, position: 'above')
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Small)
+                    ->limit(50)
+                    ->tooltip(function (TextColumn $column): ?string {
+                        $state = $column->getState();
+
+                        if (strlen($state) <= $column->getCharacterLimit()) {
+                            return null;
+                        }
+
+                        // Only render the tooltip if the column content exceeds the length limit.
+                        return $state;
+                    })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query
+                            ->where('name', 'like', "%{$search}%")
+                            ->orWhere('haki_type', 'like', "%{$search}%")
+                            ->orWhere('year', "%{$search}%");
+                    }),
                 AuthorsList::make('lecturers')
                     ->label(__('Inventors')),
-                Tables\Columns\TextColumn::make('faculties.name')
-                    ->bulleted()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('haki_type')
+                Tables\Columns\TextColumn::make('scale')
+                    ->translateLabel()
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->badge()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('faculties.name')
+                    ->bulleted()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('registration_no')
                     ->searchable(),
@@ -213,14 +241,6 @@ class HakiResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('registered_at')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('scale')
-                    ->translateLabel()
-                    ->badge()
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('year')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('link')
                     ->label('')
                     ->view('filament.tables.columns.click-here'),
