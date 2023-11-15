@@ -24,6 +24,7 @@ class Haki extends Model
         'scale',
         'year',
         'link',
+        'filename',
         'output',
         'haki_type',
     ];

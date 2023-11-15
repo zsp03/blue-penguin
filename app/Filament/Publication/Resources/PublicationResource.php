@@ -192,7 +192,7 @@ class PublicationResource extends Resource
                 Tables\Columns\TextColumn::make('citation')
                     ->translateLabel(),
                 Tables\Columns\ViewColumn::make('link')
-                    ->label(__('Source Link'))
+                    ->label(__(''))
                     ->view('filament.tables.columns.click-here'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->translateLabel()

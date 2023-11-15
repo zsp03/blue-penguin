@@ -8,6 +8,7 @@ use App\Filament\Publication\Resources\HakiResource\Pages;
 use App\Filament\Publication\Resources\HakiResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
 use App\Models\Haki;
+use Closure;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -17,6 +18,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class HakiResource extends Resource
 {
@@ -137,10 +139,28 @@ class HakiResource extends Resource
                                 Forms\Components\TextInput::make('registered_at')
                                     ->translateLabel()
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('link')
-                                    ->maxLength(2000),
+
                             ])
                             ->collapsible(),
+                        Forms\Components\Section::make()
+                            ->heading(__('Proof of Intellectual Property'))
+                            ->schema([
+                                Forms\Components\Tabs::make('')
+                                    ->tabs([
+                                        Forms\Components\Tabs\Tab::make('upload')
+                                            ->schema([
+                                                Forms\Components\FileUpload::make('filename')
+                                                    ->label('')
+                                                    ->live()
+                                                    ->directory('proof-ip')
+                                            ]),
+                                        Forms\Components\Tabs\Tab::make('link')
+                                            ->schema([
+                                                Forms\Components\TextInput::make('link')
+                                                    ->maxLength(2000),
+                                            ]),
+                                    ]),
+                            ]),
 
                         Forms\Components\Section::make()
                             ->heading(__('Invention Output'))
@@ -181,6 +201,8 @@ class HakiResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('haki_type')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->badge()
@@ -200,10 +222,11 @@ class HakiResource extends Resource
                 Tables\Columns\TextColumn::make('year')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('link')
-                    ->searchable()
+                    ->label('')
                     ->view('filament.tables.columns.click-here'),
-                Tables\Columns\TextColumn::make('haki_type')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('filename')
+                    ->label('')
+                    ->view('filament.tables.columns.attachment'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->translateLabel()
                     ->dateTime()
