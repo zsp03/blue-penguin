@@ -95,5 +95,15 @@
     "Less than 180 days": "Kurang dari 180 hari",
     "Between 180 to 540 days": "Antara 180 sampai 540 hari",
     "Final Project Graph": "Grafik Tugas Akhir",
-    "Make Faculty": "Buat Fakultas"
+    "Make Faculty": "Buat Fakultas",
+    "Search Name, NIM, or Title ": "Cari Nama, NIM, atau Judul",
+    "Search IP, Type, or Year": "Cari IP, Tipe atau Judul",
+    "Proof of Intellectual Property": "Bukti HKI",
+    "With NIP": "Dengan NIP",
+    "Other than NIP": "Selain NIP",
+    "All": "Semua",
+    "Search Title, Type and Scale": "Cari Judul, Jenis, dan Skala",
+    "Search Name and NIP": "Cari Nama dan NIP",
+    "Search Name and NIM": "Cari Nama dan NIM",
+    "Search Name, Username and Email": "Cari Nama, Username dan Email"
 }

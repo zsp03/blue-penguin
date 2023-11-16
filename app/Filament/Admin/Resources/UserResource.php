@@ -87,6 +87,7 @@ class UserResource extends Resource
     {
         return $table
             ->defaultSort('updated_at', 'desc')
+            ->searchPlaceholder(__('Search Name, Username and Email'))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()

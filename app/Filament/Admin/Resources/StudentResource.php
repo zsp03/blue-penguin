@@ -59,6 +59,7 @@ class StudentResource extends Resource
     {
         return $table
             ->defaultSort('updated_at', 'desc')
+            ->searchPlaceholder(__('Search Name and NIM'))
             ->columns([
                 Tables\Columns\Layout\Stack::make([
                     Tables\Columns\TextColumn::make('name')

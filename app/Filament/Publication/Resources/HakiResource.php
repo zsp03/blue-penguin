@@ -150,14 +150,14 @@ class HakiResource extends Resource
                             ->schema([
                                 Forms\Components\Tabs::make('')
                                     ->tabs([
-                                        Forms\Components\Tabs\Tab::make('upload')
+                                        Forms\Components\Tabs\Tab::make(__('Upload'))
                                             ->schema([
                                                 Forms\Components\FileUpload::make('filename')
                                                     ->label('')
                                                     ->live()
                                                     ->directory('proof-ip')
                                             ]),
-                                        Forms\Components\Tabs\Tab::make('link')
+                                        Forms\Components\Tabs\Tab::make('Link')
                                             ->schema([
                                                 Forms\Components\TextInput::make('link')
                                                     ->maxLength(2000),
@@ -194,7 +194,7 @@ class HakiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->searchPlaceholder('Search by IPs, Type, or Year')
+            ->searchPlaceholder(__('Search IP, Type, or Year'))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->description(function (Haki $record): Htmlable {

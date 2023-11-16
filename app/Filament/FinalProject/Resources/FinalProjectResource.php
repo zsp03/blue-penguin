@@ -112,7 +112,7 @@ class FinalProjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->searchPlaceholder('Search Name, NIM, or Title ')
+            ->searchPlaceholder(__('Search Name, NIM, or Title '))
             ->defaultSort('submitted_at')
             ->columns([
                 Tables\Columns\TextColumn::make('student.name')
@@ -230,8 +230,8 @@ class FinalProjectResource extends Resource
                     }),
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
-                        'Ongoing' => 'Ongoing',
-                        'Done' => 'Done'
+                        'Ongoing' => __('Ongoing'),
+                        'Done' => __('Done')
                     ])
                     ->default('Ongoing'),
                 Tables\Filters\Filter::make('time')->form([

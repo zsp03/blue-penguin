@@ -129,6 +129,7 @@ class LecturerResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->searchPlaceholder(__('Search Name and NIP'))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
@@ -158,9 +159,9 @@ class LecturerResource extends Resource
                 Tables\Filters\TernaryFilter::make('nip')
                     ->label(__('Display Data'))
                     ->native(false)
-                    ->placeholder('with NIP')
-                    ->trueLabel('other than NIP')
-                    ->falseLabel('All')
+                    ->placeholder(__('With NIP'))
+                    ->trueLabel(__('Other than NIP'))
+                    ->falseLabel(__('All'))
                     ->queries(
                         true: fn (Builder $query) => $query->whereRaw('CHAR_LENGTH(nip) != 18 OR NOT nip REGEXP \'^[0-9]+$\''),
                         false: fn (Builder $query) => $query->get(),

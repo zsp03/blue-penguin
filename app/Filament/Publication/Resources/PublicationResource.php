@@ -149,6 +149,7 @@ class PublicationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->searchPlaceholder(__('Search Title, Type and Scale'))
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('Title'))
