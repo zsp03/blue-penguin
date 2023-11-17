@@ -23,8 +23,8 @@ enum PublicationScale: string implements HasLabel, HasColor, HasIcon
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::NATIONAL => Color::Teal,
-            self::INTERNATIONAL => Color::Sky
+            self::NATIONAL => 'teal',
+            self::INTERNATIONAL => 'sky'
         };
     }
 

@@ -32,7 +32,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(LogoutResponseContract::class, CustomLogout::class);
 
         FilamentColor::register([
-            'violet' => Color::hex('#6B33AF')
+            'violet' => Color::hex('#6B33AF'),
+            'teal' => Color::Teal,
+            'sky' => Color::Sky
         ]);
 
         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {

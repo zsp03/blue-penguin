@@ -8,6 +8,7 @@ use App\Filament\Publication\Resources\PublicationResource\Widgets\PublicationSt
 use App\Filament\Publication\Resources\PublicationResource\Pages;
 use App\Filament\Publication\Resources\PublicationResource\RelationManagers;
 use App\Filament\Tables\Columns\AuthorsList;
+use App\Filament\Tables\Columns\PublicationDetails;
 use App\Models\Publication;
 use App\Models\Student;
 use Filament\Facades\Filament;
@@ -151,45 +152,23 @@ class PublicationResource extends Resource
         return $table
             ->searchPlaceholder(__('Search Title, Type and Scale'))
             ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->label(__('Title'))
-                    ->limit(50)
-                    ->tooltip(function (TextColumn $column): ?string {
-                        $state = $column->getState();
-
-                        if (strlen($state) <= $column->getCharacterLimit()) {
-                            return null;
-                        }
-
-                        // Only render the tooltip if the column content exceeds the length limit.
-                        return $state;
-                    })
-                    ->searchable(),
+                PublicationDetails::make('title'),
                 AuthorsList::make('lecturers')
                     ->label(__('Research Team')),
                 TextColumn::make('students.name')
-                    ->label(__('Involved Student'))
+                    ->label('')
                     ->listWithLineBreaks(),
-                Tables\Columns\TextColumn::make('year')
-                    ->translateLabel()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->label(__('Type'))
-                    ->badge()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('scale')
-                    ->translateLabel()
-                    ->badge()
-                    ->sortable()
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('total_funds')
                     ->label(__('Total Funds'))
                     ->prefix('Rp. ')
+                    ->toggleable()
                     ->numeric(0,'.',','),
                 Tables\Columns\TextColumn::make('fund_source')
                     ->label(__('Source Fund'))
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('citation')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->translateLabel(),
                 Tables\Columns\ViewColumn::make('link')
                     ->label(__(''))
