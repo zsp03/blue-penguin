@@ -230,11 +230,9 @@ class HakiResource extends Resource
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->badge()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('faculties.name')

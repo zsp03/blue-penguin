@@ -180,7 +180,6 @@ class PublicationResource extends Resource
                 Tables\Columns\TextColumn::make('scale')
                     ->translateLabel()
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => __(ucfirst($state)))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_funds')
