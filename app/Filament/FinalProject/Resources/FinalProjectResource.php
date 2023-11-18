@@ -209,7 +209,6 @@ class FinalProjectResource extends Resource
                     ->translateLabel()
                     ->searchable()
                     ->hidden(auth()->user()->role == '3')
-                    ->preload()
                     ->relationship('lecturers', 'name', function (Builder $query) {
                         return $query->where('role', 'supervisor 1');
                     }),
@@ -217,20 +216,20 @@ class FinalProjectResource extends Resource
                     ->label(fn():string => __('Supervisor').' 2')
                     ->searchable()
                     ->hidden(auth()->user()->role == '3')
-                    ->preload()
                     ->relationship('lecturers', 'name', function (Builder $query) {
                         return $query->where('role', 'supervisor 2');
                     }),
                 Tables\Filters\SelectFilter::make('evaluator')
                     ->translateLabel()
                     ->searchable()
-                    ->preload()
                     ->relationship('lecturers', 'name', function (Builder $query) {
                         return $query->where('role', 'evaluator');
                     }),
                 Tables\Filters\SelectFilter::make('status')
+                    ->native(false)
                     ->options([
                         'Ongoing' => __('Ongoing'),
+                        'Finalizing' => __('Finalizing'),
                         'Done' => __('Done')
                     ])
                     ->default('Ongoing'),

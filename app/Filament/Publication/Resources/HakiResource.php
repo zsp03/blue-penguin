@@ -3,6 +3,7 @@
 namespace App\Filament\Publication\Resources;
 
 use App\Enums\HakiStatus;
+use App\Enums\HakiType;
 use App\Enums\PublicationScale;
 use App\Filament\Publication\Resources\HakiResource\Pages;
 use App\Filament\Publication\Resources\HakiResource\RelationManagers;
@@ -198,14 +199,15 @@ class HakiResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->description(function (Haki $record): Htmlable {
-                        $haki_type = $record->haki_type->getLabel();
-                        return new HtmlString("<span class='text-xs'>" .
-                            "$haki_type"
-                            . ' | ' .
-                            "$record->type"
-                            . ' | ' .
-                            "$record->year" .
-                            "</span>");
+                        $haki_type = $record->haki_type ? $record->haki_type->getLabel() : '';
+                        $type = $record->type ? $record->type : '';
+                        $year = $record->year ? $record->year : '';
+
+                        $separator = ' | ';
+
+                        $content = implode($separator, array_filter([$haki_type, $type, $year]));
+
+                        return new HtmlString("<span class='text-xs'>$content</span>");
                     }, position: 'above')
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Small)
                     ->limit(60)
@@ -262,8 +264,53 @@ class HakiResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\SelectFilter::make('lecturers')
+                    ->hidden(auth()->user()->role == '3')
+                    ->native(false)
+                    ->label(__('Inventors'))
+                    ->searchable()
+                    ->multiple()
+                    ->relationship('lecturers', 'name'),
+                Tables\Filters\SelectFilter::make('haki_type')
+                    ->options(HakiType::class)
+                    ->native(false)
+                    ->label(__('Type')),
+                Tables\Filters\SelectFilter::make('scale')
+                    ->options(PublicationScale::class)
+                    ->native(false)
+                    ->label(__('Scale')),
+                Tables\Filters\SelectFilter::make('status')
+                    ->options(HakiStatus::class)
+                    ->native(false)
+                    ->label(__('Status')),
+                Tables\Filters\Filter::make('year')
+                    ->form([
+                        Forms\Components\TextInput::make('year_from')
+                            ->label(__('From'))
+                            ->numeric()
+                            ->placeholder(Haki::min('year'))
+                            ->minValue(0),
+                        Forms\Components\TextInput::make('year_until')
+                            ->label(__('Until'))
+                            ->numeric()
+                            ->placeholder(now()->year)
+                            ->minValue(0),
+                    ])
+                    ->columns([
+                        'sm' => 2,
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['year_from'],
+                                fn (Builder $query, $date): Builder => $query->where('year', '>=', $date),
+                            )
+                            ->when(
+                                $data['year_until'],
+                                fn (Builder $query, $date): Builder => $query->where('year', '<=', $date),
+                            );
+                    })
+            ])->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
