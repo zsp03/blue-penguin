@@ -10,19 +10,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PublicationsRelationManager extends RelationManager
+class FinalProjectsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'publications';
-
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-            ]);
-    }
+    protected static string $relationship = 'finalProjects';
 
     public function table(Table $table): Table
     {
@@ -32,11 +22,15 @@ class PublicationsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('title')
                     ->wrap()
                     ->size(Tables\Columns\TextColumn\TextColumnSize::Small),
-                Tables\Columns\TextColumn::make('type')
-                    ->badge(),
-                Tables\Columns\TextColumn::make('scale')
-                    ->badge(),
-                Tables\Columns\TextColumn::make('year')
+                Tables\Columns\TextColumn::make('role')
+                    ->translateLabel()
+                    ->badge()
+                    ->colors([
+                        'info' => 'supervisor 1',
+                        'success' => 'supervisor 2',
+                        'violet' => 'evaluator'
+                    ])
+                    ->formatStateUsing(fn (string $state): string => (__(ucfirst($state))))
             ])
             ->filters([
                 //
