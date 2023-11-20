@@ -60,8 +60,9 @@ class ListFinalProjects extends ListRecords
                             $newData[$key] = null;
                         }
                     }
+
                     $year = $data['submitted_at'];
-                    $newData['submitted_at'] = Carbon::create($year, 1, 1);
+                    $newData['submitted_at'] = Carbon::parse($year);
 
                     $evaluatorIds = function () use ($evaluatorList) {
                         $lecturers = Lecturer::whereIn('nip', $evaluatorList)->get();
