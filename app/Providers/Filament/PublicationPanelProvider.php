@@ -29,6 +29,7 @@ class PublicationPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->brandLogo(asset('assets/images/logo.png'))
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.ico'))
