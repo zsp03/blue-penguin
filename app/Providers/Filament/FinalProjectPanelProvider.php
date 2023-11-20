@@ -21,7 +21,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use pxlrbt\FilamentSpotlight\SpotlightPlugin;
 
 class FinalProjectPanelProvider extends PanelProvider
 {
@@ -51,7 +50,6 @@ class FinalProjectPanelProvider extends PanelProvider
             ])
             ->sidebarCollapsibleOnDesktop()
             ->plugins([
-                SpotlightPlugin::make(),
                 FilamentLanguageSwitchPlugin::make(),
             ])
             ->middleware([
