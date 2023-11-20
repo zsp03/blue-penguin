@@ -152,7 +152,13 @@ class PublicationResource extends Resource
         return $table
             ->searchPlaceholder(__('Search Title, Type and Scale'))
             ->columns([
-                PublicationDetails::make('title'),
+                PublicationDetails::make('title')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query
+                            ->where('title', 'like',"%{$search}%")
+                            ->orWhere('type', 'like',"%{$search}%")
+                            ->orWhere('scale', 'like',"%{$search}%");
+                    }),
                 AuthorsList::make('lecturers')
                     ->label(__('Research Team')),
                 TextColumn::make('students.name')
