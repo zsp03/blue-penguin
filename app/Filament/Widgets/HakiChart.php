@@ -30,21 +30,21 @@ class HakiChart extends ChartWidget
             ]
         ]
     ];
-    public function getHakiLabel()
-    {
-        return Haki::groupBy('haki_type')
-            ->select(DB::raw('COALESCE(haki_type, "Uncategorized") as haki_type'), DB::raw('count(*) as count'))
-            ->orderBy('count', 'desc')
-            ->get()
-            ->pluck('haki_type');
-    }
+//    public function getHakiLabel()
+//    {
+//        return Haki::groupBy('haki_type')
+//            ->select(DB::raw('COALESCE(haki_type, "Uncategorized") as haki_type'), DB::raw('count(*) as count'))
+//            ->orderBy('count', 'desc')
+//            ->get()
+//            ->pluck('haki_type');
+//    }
     protected function getData(): array
     {
 //        dd($this->getHakiLabel());
         return [
             'datasets' => [
                 [
-                    'label' => 'HKI',
+                    'label' => __('Intellectual Properties'),
                     'data' => $this->getHakiData(),
                     'animation' => [
                         'duration' => 1000,
@@ -53,7 +53,7 @@ class HakiChart extends ChartWidget
                     ]
                 ]
             ],
-            'labels' => $this->getHakiLabel()
+            'labels' => [__('Copyright'), __('Patent'), __('Uncategorized'), __('Industrial Design'), __('Brand')]
         ];
     }
 

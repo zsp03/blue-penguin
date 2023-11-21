@@ -18,13 +18,13 @@ enum HakiType: string implements HasLabel
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::PATEN => __('Paten'),
-            self::MEREK => __('Merek'),
-            self::DESAIN_INDUSTRI => __('Desain Industri'),
-            self::HAK_CIPTA => __('Hak Cipta'),
-            self::INDIKASI_GEOGRAFIS => __('Indikasi Geografis'),
-            self::RAHASIA_DAGANG => __('Rahasia Dagang'),
-            self::DESAIN_TATA_LETAK_SIRKUIT_TERPADU => __('Desain Tata Letak Sirkuit Terpadu'),
+            self::PATEN => __('Patent'),
+            self::MEREK => __('Brand'),
+            self::DESAIN_INDUSTRI => __('Industrial Design'),
+            self::HAK_CIPTA => __('Copyright'),
+            self::INDIKASI_GEOGRAFIS => __('Geographical Indication'),
+            self::RAHASIA_DAGANG => __('Trade Secret'),
+            self::DESAIN_TATA_LETAK_SIRKUIT_TERPADU => __('Layout Design'),
             self::UNCATEGORIZED => __('Uncategorized')
         };
     }
