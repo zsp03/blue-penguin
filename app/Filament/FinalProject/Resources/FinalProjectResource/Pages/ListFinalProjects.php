@@ -33,6 +33,7 @@ class ListFinalProjects extends ListRecords
                     ImportField::make('evaluatorOne'),
                     ImportField::make('evaluatorTwo'),
                     ImportField::make('submitted_at'),
+                    ImportField::make('phone_number'),
                     ImportField::make('status')
                 ])
                 ->hidden(auth()->user()->role !== '0')
@@ -40,6 +41,7 @@ class ListFinalProjects extends ListRecords
                     $keysToAdd = [
                         'title',
                         'submitted_at',
+                        'phone_number',
                         'status',
                     ];
 

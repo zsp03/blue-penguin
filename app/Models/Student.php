@@ -14,7 +14,8 @@ class Student extends Model
     protected $fillable = [
         'name',
         'nim',
-        'email'
+        'email',
+        'phone_number',
     ];
 
     public function finalProject(): HasOne

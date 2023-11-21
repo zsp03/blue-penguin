@@ -52,6 +52,7 @@ class StudentResource extends Resource
                     ->email()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
+                Forms\Components\TextInput::make('phone_number')
             ]);
     }
 

@@ -161,6 +161,8 @@ class FinalProjectResource extends Resource
                     ->label(__("Proposed at"))
                     ->date('d F Y')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('student.phone_number')
+                    ->label(__("Phone Number")),
                 TextColumn::make('status')
                     ->translateLabel()
                     ->badge()
