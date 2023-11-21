@@ -29,21 +29,28 @@ class HakisRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->wrap()
+                    ->size(Tables\Columns\TextColumn\TextColumnSize::Small),
+
+                Tables\Columns\TextColumn::make('haki_type'),
+                Tables\Columns\TextColumn::make('type'),
+                Tables\Columns\TextColumn::make('scale')
+                    ->badge(),
+                Tables\Columns\TextColumn::make('year')
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DetachAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DetachBulkAction::make()
                 ]),
             ]);
     }

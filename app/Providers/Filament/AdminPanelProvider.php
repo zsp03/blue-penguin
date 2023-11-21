@@ -19,7 +19,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use pxlrbt\FilamentSpotlight\SpotlightPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -27,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->brandLogo(asset('assets/images/logo.png'))
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.ico'))
@@ -53,7 +53,6 @@ class AdminPanelProvider extends PanelProvider
                     ->label(fn ():string => __('Management')),
             ])
             ->plugins([
-                SpotlightPlugin::make(),
                 FilamentLanguageSwitchPlugin::make(),
             ])
             ->middleware([

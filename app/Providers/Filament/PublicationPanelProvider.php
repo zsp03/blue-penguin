@@ -23,13 +23,13 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use pxlrbt\FilamentSpotlight\SpotlightPlugin;
 
 class PublicationPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->brandLogo(asset('assets/images/logo.png'))
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.ico'))
@@ -51,7 +51,6 @@ class PublicationPanelProvider extends PanelProvider
             ])
             ->sidebarCollapsibleOnDesktop()
             ->plugins([
-                SpotlightPlugin::make(),
                 FilamentLanguageSwitchPlugin::make(),
             ])
             ->middleware([

@@ -185,7 +185,8 @@ class LecturerResource extends Resource
     {
         return [
             RelationManagers\PublicationsRelationManager::class,
-            RelationManagers\HakisRelationManager::class
+            RelationManagers\HakisRelationManager::class,
+            RelationManagers\FinalProjectsRelationManager::class
         ];
     }
 
