@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Auth\CustomLogin;
 use App\Filament\FinalProject\Pages\Auth\CustomProfile;
 use App\Filament\FinalProject\Resources\FinalProjectResource\Widgets\FinalProjectStudentChart;
+use App\Filament\Widgets\AccountOverviewCustom;
 use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -40,13 +41,9 @@ class FinalProjectPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/FinalProject/Resources'), for: 'App\\Filament\\FinalProject\\Resources')
             ->discoverPages(in: app_path('Filament/FinalProject/Pages'), for: 'App\\Filament\\FinalProject\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/FinalProject/Widgets'), for: 'App\\Filament\\FinalProject\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                AccountOverviewCustom::class,
                 FinalProjectStudentChart::class,
             ])
             ->sidebarCollapsibleOnDesktop()
