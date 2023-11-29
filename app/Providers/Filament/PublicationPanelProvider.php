@@ -7,7 +7,6 @@ use App\Filament\Publication\Pages\Auth\CustomProfile;
 use App\Filament\Widgets\AccountOverviewCustom;
 use App\Filament\Widgets\PublicationChart;
 use App\Filament\Widgets\PublicationLineChart;
-use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -50,9 +49,7 @@ class PublicationPanelProvider extends PanelProvider
                 PublicationLineChart::class,
             ])
             ->sidebarCollapsibleOnDesktop()
-            ->plugins([
-                FilamentLanguageSwitchPlugin::make(),
-            ])
+            ->plugins([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

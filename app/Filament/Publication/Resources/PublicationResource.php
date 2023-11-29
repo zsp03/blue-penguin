@@ -95,12 +95,7 @@ class PublicationResource extends Resource
                                     ->required()
                                     ->native(false)
                                     ->selectablePlaceholder(false)
-                                    ->options([
-                                        'jurnal' => (__('Journal')),
-                                        'prosiding' => (__('Proceeding')),
-                                        'penelitian' => (__('Research')),
-                                        'pengabdian' => (__('Service')),
-                                    ]),
+                                    ->options(PublicationType::class),
                                 Forms\Components\TextInput::make('total_funds')
                                     ->label(__('Total Funds'))
                                     ->prefix('Rp.')

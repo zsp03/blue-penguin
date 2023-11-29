@@ -33,3 +33,7 @@
 .apexcharts-toolbar {
     right: auto!important;
 }
+
+.language-switch-trigger > img {
+    @apply rounded-lg w-7 h-7 p-0.5
+}

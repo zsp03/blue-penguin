@@ -6,7 +6,6 @@ use App\Filament\Auth\CustomLogin;
 use App\Filament\FinalProject\Pages\Auth\CustomProfile;
 use App\Filament\FinalProject\Resources\FinalProjectResource\Widgets\FinalProjectStudentChart;
 use App\Filament\Widgets\AccountOverviewCustom;
-use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -47,9 +46,7 @@ class FinalProjectPanelProvider extends PanelProvider
                 FinalProjectStudentChart::class,
             ])
             ->sidebarCollapsibleOnDesktop()
-            ->plugins([
-                FilamentLanguageSwitchPlugin::make(),
-            ])
+            ->plugins([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
